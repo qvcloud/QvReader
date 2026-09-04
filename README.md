@@ -11,6 +11,8 @@ document-first. Press `F2` to edit in place, `F3` for a live split view. When yo
 
 </div>
 
+**Languages:** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Português (Brasil)](README.pt-BR.md) · [Español](README.es.md)
+
 ---
 
 ## Why QvReader?

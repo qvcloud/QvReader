@@ -17,7 +17,7 @@ Core values (from the project charter):
 4. Editing is enough for real fixes, never a heavy editor.
 5. Local files, local-first, no required account or cloud.
 
-## Current capabilities (v1.0.0)
+## Current capabilities (v0.1.0)
 
 - **Instant reading** of CommonMark / GFM documents.
 - **Fidelity** — the source file is the single source of truth. Unknown syntax, line endings,
