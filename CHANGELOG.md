@@ -2,6 +2,13 @@
 
 All notable changes are tracked here. Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.0] - 2026-09-04
+
+### Added
+- <describe what is new>
+
+---
+
 ## [1.0.0] - 2026-09-04
 
 ### Added
