@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.tmp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local build artifacts (this repo holds community info, not compiled output)
+*.dmg
+*.app
+*.exe
+*.msi
+*.deb
+*.AppImage
+/build-downloads/
