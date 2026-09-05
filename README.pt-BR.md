@@ -46,23 +46,31 @@ notas de release.
 | Tamanho do texto | Tamanho do corpo e zoom ajustáveis |
 | Observação de arquivo | Detecta edições externas, avisa antes de sobrescrever |
 
-### Edição
+### Edição e autoria
 
-| Modo | Atalho | O que faz |
+| Modo | Atalho | Regras e o que faz |
 |---|---|---|
-| **Visão dividida** | `F3` | Fonte Markdown à esquerda, pré-visualização sincronizada à direita |
-| **Edição inline** | `F2` | Edite no lugar, na tela de leitura |
-| **Modo de leitura** | `Esc` | De volta à leitura limpa, ou fecha quando limpo |
+| **Edição inline** | `F2` | **Recurso básico, 100% grátis para sempre**. Edite no próprio local via CodeMirror 6 |
+| **Visão dividida** | `F3` | Fonte à esquerda, pré-visualização síncrona ao vivo. **20 usos grátis ao dia**, aviso suave sem bloqueio ao exceder |
+| **Modo de leitura** | `Esc` | Retorne à leitura limpa; feche a janela instantaneamente se não houver edições |
 
 - `Cmd/Ctrl+S` salva com **fidelidade de fim de linha (LF/CRLF) e codificação (UTF-8/BOM)**.
-- Alterações não salvas são protegidas — sem perda silenciosa de dados ao fechar, sair ou em mudança externa.
+- Alterações não salvas são estritamente protegidas — sem perda silenciosa de dados ao fechar ou sair.
 - A visão dividida mantém sua linha do cursor alinhada e destacada na pré-visualização.
 - Todas as visões compartilham um único estado de documento e histórico de desfazer.
 
-### Workspace
+### Exportação e compartilhamento
 
-- `qvreader .` no terminal abre uma **pasta como workspace**, com barra lateral de árvore de arquivos.
-- Registre o CLI uma vez e abra qualquer arquivo ou projeto de qualquer lugar.
+- **Impressão padrão** (`Cmd/Ctrl+P`): Diálogo nativo do sistema com estilo otimizado para papel e economia de tinta. Grátis para sempre.
+- **Exportar como PDF** (`Cmd/Ctrl+Shift+P`): Fluxo guiado para geração direta de PDF.
+- **Exportar como imagem longa PNG** (`Cmd/Ctrl+Shift+E`): Captura 2x Retina em alta resolução. Salva automaticamente e copia para a área de transferência.
+- **Exportar como HTML independente** (`Cmd/Ctrl+Shift+H`): Arquivo único portátil com estilos offline e motores embutidos.
+- *(As exportações avançadas e o workspace incluem uma cota de 300 sessões de teste. A versão Pro é ilimitada e vitalícia)*
+
+### Workspace e gerenciamento de projetos
+
+- Pressione `Cmd/Ctrl+Shift+W` ou clique na gaveta superior para expandir a **barra lateral com árvore de arquivos**.
+- Execute `qvreader .` no terminal para abrir a pasta atual como workspace de imediato.
 
 ---
 

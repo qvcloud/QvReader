@@ -46,23 +46,31 @@ reuniones, notas de versión.
 | Tamaño de texto | Tamaño del cuerpo y zoom ajustables |
 | Observación de archivo | Detecta ediciones externas, avisa antes de sobrescribir |
 
-### Edición
+### Edición y autoría
 
-| Modo | Atajo | Qué hace |
+| Modo | Atajo | Reglas y funcionamiento |
 |---|---|---|
-| **Vista dividida** | `F3` | Fuente Markdown a la izquierda, vista previa sincronizada a la derecha |
-| **Edición en línea** | `F2` | Edita en el lugar, sobre el lienzo de lectura |
-| **Modo de lectura** | `Esc` | Vuelve a la lectura limpia, o cierra cuando está limpio |
+| **Edición en línea** | `F2` | **Función básica, gratis para siempre**. Edita directamente en el lienzo vía CodeMirror 6 |
+| **Vista dividida** | `F3` | Fuente a la izquierda, vista previa sincrónica en tiempo real. **20 usos diarios gratis**, aviso suave sin bloqueo al exceder |
+| **Modo de lectura** | `Esc` | Vuelve a la lectura limpia; cierra la ventana rápidamente si no hay cambios |
 
 - `Cmd/Ctrl+S` guarda con **fidelidad de saltos de línea (LF/CRLF) y codificación (UTF-8/BOM)**.
-- Los cambios sin guardar están protegidos — sin pérdida silenciosa de datos al cerrar, salir o ante cambios externos.
+- Los cambios sin guardar están estrictamente protegidos — sin pérdida silenciosa de datos al cerrar o salir.
 - La vista dividida mantiene tu línea de cursor alineada y resaltada en la vista previa.
 - Todas las vistas comparten un único estado de documento e historial de deshacer.
 
-### Espacio de trabajo
+### Exportación y compartir
 
-- `qvreader .` desde una terminal abre una **carpeta como espacio de trabajo**, con barra lateral de árbol de archivos.
-- Registra el CLI una vez y abre cualquier archivo o proyecto desde cualquier lugar.
+- **Impresión estándar** (`Cmd/Ctrl+P`): Diálogo de impresión nativo del sistema con estilo optimizado para papel y tinta. Gratis para siempre.
+- **Exportar a PDF** (`Cmd/Ctrl+Shift+P`): Proceso guiado de exportación directa a PDF.
+- **Exportar a imagen PNG** (`Cmd/Ctrl+Shift+E`): Captura 2x Retina en alta resolución. Descarga automática y copia directa al portapapeles.
+- **Exportar a HTML independiente** (`Cmd/Ctrl+Shift+H`): Archivo único portátil con estilos y motores fuera de línea integrados.
+- *(Las exportaciones avanzadas y el espacio de trabajo incluyen una prueba de 300 sesiones. La edición Pro es ilimitada de por vida)*
+
+### Espacio de trabajo y proyectos
+
+- Presiona `Cmd/Ctrl+Shift+W` o haz clic en el cajón superior para desplegar la **barra lateral de árbol de archivos**.
+- Ejecuta `qvreader .` desde la terminal para abrir la carpeta actual como espacio de trabajo de inmediato.
 
 ---
 

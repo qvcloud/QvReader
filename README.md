@@ -41,26 +41,35 @@ local documents fast** — READMEs, AI-generated docs, meeting notes, release no
 | Local images | Relative paths resolve against the document's directory |
 | TOC outline | Navigate long documents by heading; active section highlighted |
 | Themes | Light / Dark / Follow-system + presets |
+| Smart Adaptive Width | Fluid responsive width (896px–1280px) eliminating wide display gutters, with 3 reading width modes (Adaptive/Standard/Full) |
 | Text size | Adjustable body size & zoom |
 | File watch | Detects external edits, warns before you overwrite |
 
-### Editing
+### Authoring & Editing
 
-| Mode | Shortcut | What it does |
+| Mode | Shortcut | Rules & What it does |
 |---|---|---|
-| **Split view** | `F3` | Markdown source left, live synced preview right |
-| **Inline edit** | `F2` | Edit in place on the reading canvas |
-| **Reading mode** | `Esc` | Back to clean reading, or close when clean |
+| **Inline edit** | `F2` | **100% Free Core Feature**. Edit directly on the reading canvas via CodeMirror 6 |
+| **Split view** | `F3` | Side-by-side editing with live preview. **20 free uses/day**, soft non-blocking prompt beyond |
+| **Reading mode** | `Esc` | Return to clean reading mode; press `Esc` when unmodified to close window |
 
 - `Cmd/Ctrl+S` saves with **line-ending (LF/CRLF) & encoding (UTF-8/BOM) fidelity**.
-- Unsaved changes are guarded — no silent data loss on close, exit, or external change.
-- Split view keeps your cursor line aligned & highlighted on the preview.
-- All views share one document state & undo history.
+- Unsaved changes are strictly guarded — no silent data loss on close, exit, or external changes.
+- Split view keeps your cursor line aligned and highlighted on the preview.
+- All views share one document state and undo history.
 
-### Workspace
+### Export & Sharing
 
-- `qvreader .` from a terminal opens a **folder as a workspace** with a file-tree sidebar.
-- Register the CLI once, then open any file or project from anywhere.
+- **Standard Print** (`Cmd/Ctrl+P`): Native OS print dialog with paper-optimized, ink-friendly styling. Free forever.
+- **Export as PDF** (`Cmd/Ctrl+Shift+P`): Dedicated direct PDF export pipeline with system guidance.
+- **Export as Long Image PNG** (`Cmd/Ctrl+Shift+E`): 2x Retina high-resolution document snapshot, automatically saved and copied to clipboard.
+- **Export as Standalone HTML** (`Cmd/Ctrl+Shift+H`): Portable self-contained HTML file with embedded offline styles and rendering engines.
+- *(Advanced exports and workspace management include a 300-session free evaluation quota; Pro users enjoy unlimited access)*
+
+### Workspace & Project Management
+
+- Press `Cmd/Ctrl+Shift+W` or click the top folder drawer to toggle the **workspace file-tree sidebar**.
+- Run `qvreader .` from a terminal to instantly open the current directory as a project workspace.
 
 ---
 
