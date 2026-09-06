@@ -2,6 +2,24 @@
 
 All notable changes are tracked here. Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.4] - 2026-09-06
+
+### Added
+- Automated bundle size budget and performance test harness (`bundle_budget.test.ts`, `markdown_math.test.ts`, `syntax_highlight.test.ts`, `export_pipeline.test.ts`) guarding against bundle bloat and ensuring sub-50ms cold document render latency.
+- Tailored WOFF2-only KaTeX typography stylesheet (`katex-woff2.css`) providing full mathematical coverage with zero legacy format overhead.
+
+### Changed
+- Major client package and distribution footprint optimization:
+  - Frontend static assets directory (`dist/`) reduced by 28.1% (from 6.75 MB down to 4.67 MB, shaving off 1.91 MB).
+  - Main JavaScript entry bundle (`index.js`) reduced by 64.3% (from 1.72 MB down to 614 KB).
+  - Web font assets reduced by 77.7% (from 1,150 KB down to 256 KB), completely eliminating 40 redundant `.ttf` and `.woff` duplicates.
+  - Syntax highlighting refactored to `highlight.js/lib/common`, shedding ~150 unused language grammars while preserving complete fidelity across 38 core languages.
+  - Heavy canvas export dependencies (`html-to-image`) decoupled into an asynchronous chunk (12 KB), removing export overhead from initial boot.
+  - Rust native release compilation profile switched to `opt-level = "z"` for optimal executable compactness.
+  - Windows NSIS installer configured with solid LZMA compression (`compression: "lzma"`).
+
+---
+
 ## [0.1.3] - 2026-09-06
 
 ### Added
