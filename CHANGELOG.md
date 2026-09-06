@@ -2,6 +2,24 @@
 
 All notable changes are tracked here. Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.5] - 2026-09-06
+
+### Added
+- On-demand CodeMirror 6 code splitting: `InlineEditor` and `SplitContainer` (~508 kB bundle) dynamically loaded on demand via `React.lazy` and `<Suspense>`, completely excluded from the cold reading critical path.
+- Idle background preloader hook (`useEditorPrefetch`): leverages `requestIdleCallback` to preheat editor assets, ensuring instantaneous (<50ms) activation on `F2` (inline) and `F3` (split) triggers.
+- Dynamic KaTeX mathematics engine: decoupled ~260 kB KaTeX bundle from startup; standard Markdown documents load 0 KB KaTeX, hydrating asynchronously on demand only when math syntax (`$`) is detected.
+- Single-step startup IPC bootstrapping (`get_initial_launch_data`): replaces 3 sequential IPC roundtrips (`getInitialFile` -> `classifyPath` -> `openFile`) with a single frame-1 payload, auto-registering file watcher.
+- macOS Finder double-click cold-start synchronization: buffered 75ms synchronization window in Rust event loop completely eliminates `sample.md` placeholder flash.
+- Anti-white-flash inline theme probe: `<head>` inline script detects dark mode preferences before first paint; native window visibility synchronized with `showWindow()` IPC.
+
+### Fixed
+- Fixed high-resolution PNG image export width mismatch and right-side truncation:
+  - Dynamically calculates displayed content width matching screen layout instead of hardcoded 860px clamping.
+  - Automatically accounts for container padding in canvas dimensions (`totalWidth = contentWidth + paddingX * 2`), preventing right-side and bottom truncation.
+  - Injected anti-truncation export CSS with soft word-wrap (`white-space: pre-wrap !important; word-break: break-word !important;`) and responsive tables (`display: table !important; overflow: visible !important;`) ensuring long code lines and multi-column tables are 100% visible.
+
+---
+
 ## [0.1.4] - 2026-09-06
 
 ### Added
