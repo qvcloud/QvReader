@@ -4,152 +4,121 @@
 
 # QvReader
 
-**Ultra-lightweight, instant Markdown reader & editor for macOS & Windows**
+**Ultra-lightweight, instant Markdown reader and editor for macOS and Windows**
 
-Open a `.md` file and read it like a web page — in milliseconds. Clean, distraction-free,
-document-first. Press `F2` to edit in place, `F3` for a live split view. When you're done, press `Esc` and leave.
+Open a `.md` file and read it like a clean web page — sub-50ms cold launch, instantaneous response. Distraction-free and document-focused.  
+Press `F2` to edit inline, press `F3` for live synchronized split preview. Hit `Esc` when finished to close instantly.
+
+[![Version](https://img.shields.io/badge/Desktop-v0.1.4-blue.svg)](https://github.com/qvcloud/QvReader/releases/tag/v0.1.4)
+[![Website](https://img.shields.io/badge/Website-v1.0.8-emerald.svg)](https://qvreader.com)
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)](#downloads--mirrors)
 
 </div>
 
-**Languages:** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Português (Brasil)](README.pt-BR.md) · [Español](README.es.md)
+**Languages:** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
 
 ---
 
 ## Why QvReader?
 
-Most Markdown tools solve "writing a lot." QvReader solves **reading and lightly editing
-local documents fast** — READMEs, AI-generated docs, meeting notes, release notes.
+Most Markdown editors are built for heavy document authoring or complex networked databases. QvReader is built specifically for **instant reading and lightweight editing of local Markdown files** — READMEs, AI-generated code documentation, technical specifications, meeting notes, and release announcements.
 
-- **Opens instantly.** Double-click a file, you're reading. No project, no vault, no workbench.
-- **Tiny footprint.** A native Tauri app — no bundled browser engine. The installer is a few MB.
-- **Distraction-free reading.** Clean typography, no toolbars crowding the page. Reading is the default state.
-- **Local-first.** Your files stay on your disk. No account, no cloud, no telemetry of your content.
-- **Edit when you need it.** Reading never corrupts your source. Editing is explicit, and always honors your original bytes.
-
----
-
-## Features
-
-### Reading (default)
-
-| Capability | Detail |
-|---|---|
-| Instant open | Double-click `.md` → reading view |
-| GFM rendering | Headings, tables, task lists, strikethrough, blockquotes |
-| Syntax-highlighted code | highlight.js, fence language auto-detect |
-| Math (KaTeX) | Inline & block LaTeX |
-| Local images | Relative paths resolve against the document's directory |
-| TOC outline | Navigate long documents by heading; active section highlighted |
-| Themes | Light / Dark / Follow-system + presets |
-| Smart Adaptive Width | Fluid responsive width (896px–1280px) eliminating wide display gutters, with 3 reading width modes (Adaptive/Standard/Full) |
-| Text size | Adjustable body size & zoom |
-| File watch | Detects external edits, warns before you overwrite |
-
-### Authoring & Editing
-
-| Mode | Shortcut | Rules & What it does |
-|---|---|---|
-| **Inline edit** | `F2` | **100% Free Core Feature**. Edit directly on the reading canvas via CodeMirror 6 |
-| **Split view** | `F3` | Side-by-side editing with live preview. **20 free uses/day**, soft non-blocking prompt beyond |
-| **Reading mode** | `Esc` | Return to clean reading mode; press `Esc` when unmodified to close window |
-
-- `Cmd/Ctrl+S` saves with **line-ending (LF/CRLF) & encoding (UTF-8/BOM) fidelity**.
-- Unsaved changes are strictly guarded — no silent data loss on close, exit, or external changes.
-- Split view keeps your cursor line aligned and highlighted on the preview.
-- All views share one document state and undo history.
-
-### Export & Sharing
-
-- **Standard Print** (`Cmd/Ctrl+P`): Native OS print dialog with paper-optimized, ink-friendly styling. Free forever.
-- **Export as PDF** (`Cmd/Ctrl+Shift+P`): Dedicated direct PDF export pipeline with system guidance.
-- **Export as Long Image PNG** (`Cmd/Ctrl+Shift+E`): 2x Retina high-resolution document snapshot, automatically saved and copied to clipboard.
-- **Export as Standalone HTML** (`Cmd/Ctrl+Shift+H`): Portable self-contained HTML file with embedded offline styles and rendering engines.
-- *(Advanced exports and workspace management include a 300-session free evaluation quota; Pro users enjoy unlimited access)*
-
-### Workspace & Project Management
-
-- Press `Cmd/Ctrl+Shift+W` or click the top folder drawer to toggle the **workspace file-tree sidebar**.
-- Run `qvreader .` from a terminal to instantly open the current directory as a project workspace.
+- ⚡ **Ultra-Fast Native Performance**: Powered by Rust and Tauri, with a ~5MB compact binary footprint, a 614KB JS entry bundle, and sub-50ms cold startup. Effortlessly renders 50,000+ line documents at 60 FPS smooth scrolling.
+- 📐 **Screen-Adaptive Fluid Layout**: Dynamic width management (896px–1280px) eliminating excessive margin whitespace on wide monitors, offering 3 layout modes: `adaptive`, `standard`, and `full`.
+- 📊 **Mermaid Diagram Zoom Modal**: Native rendering of flowcharts, sequence diagrams, and architecture graphs with an interactive double-click modal for panning, dragging, and full-screen inspection.
+- 📤 **4-Way Export Pipeline**: Ink-friendly Print (`Cmd/Ctrl+P`), high-fidelity vector PDF (`Cmd/Ctrl+Shift+P`), 2x Retina PNG with auto-clipboard sync (`Cmd/Ctrl+Shift+E`), and standalone self-contained offline HTML (`Cmd/Ctrl+Shift+H`).
+- 🔒 **Local-First & Pure Privacy**: Your documents never leave your local disk. No internet connection required, zero document telemetry, and no mandatory account sign-up.
+- ⌨️ **Minimal Interaction Contract**: Double-click `.md` to open instantly in reading mode; press `Esc` to close; press `F2` to edit inline; press `F3` for live split preview.
 
 ---
 
-## Install
+## Downloads & Mirrors
 
-Download the latest installer for your platform from the
-**[GitHub Releases](https://github.com/qvcloud/QvReader/releases)** page.
+Download the v0.1.4 installer from GitHub Releases or verified high-speed CDN mirrors:
 
-| Platform | Artifact |
-|---|---|
-| macOS (Apple Silicon & Intel) | `QvReader_<ver>_universal.dmg` |
-| Windows (x64) | `QvReader_<ver>_x64-setup.exe` / `.msi` |
-| Linux (Debian / AppImage) | `QvReader_<ver>_amd64.deb` / `.AppImage` |
+| Platform / Architecture | Package File | Official GitHub Releases | Fast Mirror 1 (ghfast) | Fast Mirror 2 (gh-proxy) |
+|---|---|---|---|---|
+| **macOS** (Apple Silicon) | `QvReader-0.1.4-arm64.dmg` | [Download](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [Fast Mirror](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [Alternate](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) |
+| **macOS** (Intel x64) | `QvReader-0.1.4-x64.dmg` | [Download](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [Fast Mirror](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [Alternate](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) |
+| **Windows** (x64 Installer) | `QvReader-0.1.4-x64-setup.exe` | [Download](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [Fast Mirror](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [Alternate](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) |
+| **Windows** (x64 Portable) | `QvReader-0.1.4-windows-x64.zip` | [Download](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [Fast Mirror](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [Alternate](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) |
+| **Linux** (x64 AppImage) | `QvReader-0.1.4-amd64.AppImage` | [Download](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [Fast Mirror](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [Alternate](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) |
 
-> The repository this page lives in is the **community & release home**. Source code is
-> developed privately and mirrored into installers published under **Releases**.
-
-### Register the `qvreader` CLI (optional)
-
-```bash
-# macOS: point the wrapper at the installed app
-qvreader README.md        # open a file
-qvreader .                # open current folder as a workspace
-```
+Checksums and earlier versions are available on the [GitHub Releases Page](https://github.com/qvcloud/QvReader/releases).
 
 ---
 
-## Quick Start
+## Installation & Security Trust Guidance
 
-```bash
-# open a specific file
-qvreader path/to/file.md
+QvReader community packages are built with full transparency via GitHub Actions CI with published SHA256 checksums. Until official commercial EV code signing certificates are applied, OS security tools may show an unsigned developer dialog. Please follow these simple steps to trust and launch the application:
 
-# open a folder as a workspace
-qvreader .
+### macOS (Apple Gatekeeper)
 
-# double-click any .md file
-# it just opens — reading, immediately
-```
+If macOS shows: *"QvReader cannot be opened because the developer cannot be verified"* or *"The app is damaged and can’t be opened"*:
 
-**Reading** → scroll, follow links, select text.
-**Editing** → press `F3` (split) or `F2` (inline), make changes, `Cmd/Ctrl+S` to save, `Esc` to return.
-**Navigation** → toggle the outline / workspace sidebar.
+1. **GUI Quick Trust**:
+   - Drag `QvReader.app` into `/Applications`.
+   - **Right-click** (or Control-click) `QvReader.app` and choose **Open**.
+   - In the system prompt dialog, click **Open**. The app will launch and will not prompt again.
+2. **Terminal One-Liner (Recommended)**:
+   ```bash
+   xattr -cr /Applications/QvReader.app
+   ```
+
+### Windows (Microsoft Defender SmartScreen)
+
+If Windows displays a blue modal stating: *"Windows protected your PC"*:
+
+1. Click the **"More info"** link inside the dialog.
+2. Click the **"Run anyway"** button that appears in the bottom right corner.
+
+---
+
+## Key Shortcuts
+
+| Action / Mode | Shortcut (macOS) | Shortcut (Windows/Linux) | Description |
+|---|---|---|---|
+| **Inline Edit** | `F2` | `F2` | In-place editing on the reading canvas; **100% permanently free** |
+| **Split Preview** | `F3` | `F3` | Side-by-side source code and live synchronized preview |
+| **Exit / Close** | `Esc` | `Esc` | Exits edit mode; immediately closes the window when unmodified |
+| **Save Document** | `Cmd + S` | `Ctrl + S` | Saves preserving line endings (LF/CRLF) and encoding (UTF-8) |
+| **Print Document** | `Cmd + P` | `Ctrl + P` | System native print dialog with ink-friendly styling |
+| **Export to PDF** | `Cmd + Shift + P` | `Ctrl + Shift + P` | High-fidelity vector PDF generation |
+| **Export to Retina PNG** | `Cmd + Shift + E` | `Ctrl + Shift + E` | 2x Retina full-page screenshot with automatic clipboard copy |
+| **Export to Standalone HTML** | `Cmd + Shift + H` | `Ctrl + Shift + H` | Self-contained offline HTML file bundle |
+| **Settings Center** | `Cmd + ,` | `Ctrl + ,` | Themes, layout modes (adaptive/standard/full), and font adjustments |
+
+---
+
+## Editions & Commercial Boundaries
+
+QvReader adheres to a transparent, local-first commercial model:
+
+- **Community Edition (Free Forever)**:
+  - Full core reading experience 100% free with no time limits or ads.
+  - `F2` inline editing 100% free with zero paywalls.
+  - `F3` split-view editing includes 300 free trial evaluation sessions.
+  - **Never hard-locked upon trial exhaustion**: You can continue using F3 mode freely (a gentle purchase reminder appears when opening new files), and **document saving is never blocked**.
+- **Pro Edition ($9.99 One-Time Lifetime Buyout)**:
+  - One-time purchase with lifetime updates and zero recurring subscriptions.
+  - Supports **3+ personal devices** across macOS and Windows.
+  - **100% local offline activation** with complete removal of all Pro prompts.
+  - 14-day refund guarantee via [qvreader.com](https://qvreader.com).
 
 ---
 
 ## Documentation
 
-- [Usage & shortcuts](docs/usage.md)
-- [Features](docs/features.md)
-- [Development (build from source)](docs/development.md)
-- [Release process](docs/release-process.md)
+- [Detailed Feature Guide](docs/features.md)
+- [Usage Manual & Shortcuts](docs/usage.md)
+- [Roadmap & Planned Features](docs/roadmap.md)
+- [Building from Source](docs/development.md)
+- [Release Process](docs/release-process.md)
 - [Changelog](CHANGELOG.md)
-
----
-
-## Project status
-
-QvReader is actively developed. macOS is the primary, day-one platform; Windows ships via
-CI. Linux is evaluated once core stability and testing capacity are in place.
-
-See [docs/roadmap.md](docs/roadmap.md) for what is planned and explicitly out of scope.
 
 ---
 
 ## License
 
-[Apache License 2.0](LICENSE)
-
-```
-Copyright 2026 QvCloud (qvreader.com)
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+Distributed under the [Apache License 2.0](LICENSE).

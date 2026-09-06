@@ -42,7 +42,7 @@ CI ワークフロー（`build-desktop.yml`）は tag `v*` のプッシュでビ
 - **Windows** —— `.msi` + NSIS `.exe`
 - **Linux** —— `.deb` + `.AppImage`
 
-成果物は GitHub Release に添付されます。[.github/workflows](../.github/workflows/) を参照。
+成果物は自動的に [GitHub Releases](https://github.com/qvcloud/QvReader/releases) に添付されます。
 
 ## プロジェクト構成
 

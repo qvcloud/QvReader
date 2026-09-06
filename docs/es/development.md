@@ -42,7 +42,7 @@ Un workflow de CI (`build-desktop.yml`) compila al enviar una tag `v*`:
 - **Windows** — `.msi` + NSIS `.exe`
 - **Linux** — `.deb` + `.AppImage`
 
-Los artefactos se adjuntan a un GitHub Release. Consulta [.github/workflows](../.github/workflows/).
+Los artefactos se adjuntan automáticamente a [GitHub Releases](https://github.com/qvcloud/QvReader/releases).
 
 ## Estructura del proyecto
 

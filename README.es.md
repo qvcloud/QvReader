@@ -6,151 +6,119 @@
 
 **Lector y editor de Markdown ultraligero e instantáneo para macOS y Windows**
 
-Abre un archivo `.md` y léelo como una página web — en milisegundos. Limpio, sin distracciones,
-centrado en el documento. Pulsa `F2` para editar en el lugar, `F3` para una vista dividida en vivo.
-Cuando termines, pulsa `Esc` y sal.
+Abra un archivo `.md` y léalo como una página web limpia — inicio en frío en menos de 50 ms, respuesta instantánea. Limpio, sin distracciones y centrado en el documento.  
+Presione `F2` para editar en el lugar, presione `F3` para una vista previa dividida sincronizada en tiempo real. Presione `Esc` al terminar para cerrar al instante.
+
+[![Version](https://img.shields.io/badge/Desktop-v0.1.4-blue.svg)](https://github.com/qvcloud/QvReader/releases/tag/v0.1.4)
+[![Website](https://img.shields.io/badge/Website-v1.0.8-emerald.svg)](https://qvreader.com)
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)](#descargas-y-espejos)
 
 </div>
 
-**Idiomas:** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Português (Brasil)](README.pt-BR.md) · [Español](README.es.md)
+**Idiomas:** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
 
 ---
 
 ## ¿Por qué QvReader?
 
-La mayoría de las herramientas de Markdown resuelven "escribir mucho". QvReader resuelve **leer y
-editar ligeramente documentos locales con rapidez** — README, documentos generados por IA, notas de
-reuniones, notas de versión.
+La mayoría de los editores de Markdown están diseñados para la redacción pesada o para complejas bases de conocimiento. QvReader fue creado específicamente para la **lectura instantánea y la edición ligera de archivos Markdown locales**: archivos README, documentación generada por IA, especificaciones técnicas, actas de reuniones y notas de versiones.
 
-- **Se abre al instante.** Haz doble clic en un archivo y estás leyendo. Sin proyecto, sin bóveda, sin mesa de trabajo.
-- **Huella mínima.** Una app nativa Tauri — sin motor de navegador incluido. El instalador ocupa unos pocos MB.
-- **Lectura sin distracciones.** Tipografía limpia, sin barras de herramientas que llenen la página. Leer es el estado predeterminado.
-- **Local primero.** Tus archivos permanecen en tu disco. Sin cuenta, sin nube, sin telemetría de tu contenido.
-- **Edita cuando lo necesites.** Leer nunca corrompe tu fuente. Editar es explícito y siempre respeta tus bytes originales.
-
----
-
-## Características
-
-### Lectura (predeterminado)
-
-| Capacidad | Detalle |
-|---|---|
-| Apertura instantánea | Doble clic en `.md` → vista de lectura |
-| Renderizado GFM | Encabezados, tablas, listas de tareas, tachado, citas |
-| Código resaltado | highlight.js, detección automática de lenguaje |
-| Matemáticas (KaTeX) | LaTeX en línea y en bloque |
-| Imágenes locales | Las rutas relativas se resuelven contra el directorio del documento |
-| Esquema (TOC) | Navega documentos largos por encabezados; sección actual resaltada |
-| Temas | Claro / Oscuro / Seguir sistema + preajustes |
-| Tamaño de texto | Tamaño del cuerpo y zoom ajustables |
-| Observación de archivo | Detecta ediciones externas, avisa antes de sobrescribir |
-
-### Edición y autoría
-
-| Modo | Atajo | Reglas y funcionamiento |
-|---|---|---|
-| **Edición en línea** | `F2` | **Función básica, gratis para siempre**. Edita directamente en el lienzo vía CodeMirror 6 |
-| **Vista dividida** | `F3` | Fuente a la izquierda, vista previa sincrónica en tiempo real. **20 usos diarios gratis**, aviso suave sin bloqueo al exceder |
-| **Modo de lectura** | `Esc` | Vuelve a la lectura limpia; cierra la ventana rápidamente si no hay cambios |
-
-- `Cmd/Ctrl+S` guarda con **fidelidad de saltos de línea (LF/CRLF) y codificación (UTF-8/BOM)**.
-- Los cambios sin guardar están estrictamente protegidos — sin pérdida silenciosa de datos al cerrar o salir.
-- La vista dividida mantiene tu línea de cursor alineada y resaltada en la vista previa.
-- Todas las vistas comparten un único estado de documento e historial de deshacer.
-
-### Exportación y compartir
-
-- **Impresión estándar** (`Cmd/Ctrl+P`): Diálogo de impresión nativo del sistema con estilo optimizado para papel y tinta. Gratis para siempre.
-- **Exportar a PDF** (`Cmd/Ctrl+Shift+P`): Proceso guiado de exportación directa a PDF.
-- **Exportar a imagen PNG** (`Cmd/Ctrl+Shift+E`): Captura 2x Retina en alta resolución. Descarga automática y copia directa al portapapeles.
-- **Exportar a HTML independiente** (`Cmd/Ctrl+Shift+H`): Archivo único portátil con estilos y motores fuera de línea integrados.
-- *(Las exportaciones avanzadas y el espacio de trabajo incluyen una prueba de 300 sesiones. La edición Pro es ilimitada de por vida)*
-
-### Espacio de trabajo y proyectos
-
-- Presiona `Cmd/Ctrl+Shift+W` o haz clic en el cajón superior para desplegar la **barra lateral de árbol de archivos**.
-- Ejecuta `qvreader .` desde la terminal para abrir la carpeta actual como espacio de trabajo de inmediato.
+- ⚡ **Rendimiento nativo extremo**: Creado con Rust y Tauri, con un instalador de ~5MB, un bundle JS de entrada de 614KB y un inicio en frío inferior a 50 ms. Maneja con fluidez documentos de más de 50.000 líneas a 60 FPS.
+- 📐 **Diseño fluido adaptativo a la pantalla**: Control dinámico de anchura (896px–1280px) que elimina espacios blancos excesivos en pantallas anchas, con 3 modos: `adaptativo`, `estándar` y `ancho completo`.
+- 📊 **Modal de zoom para diagramas Mermaid**: Renderizado nativo de diagramas de flujo, secuencia y arquitectura, con un modal interactivo de pantalla completa activable con doble clic (arrastrar, desplazar y ampliar).
+- 📤 **Canal de exportación en 4 vías**: Impresión amigable con la tinta (`Cmd/Ctrl+P`), PDF vectorial de alta fidelidad (`Cmd/Ctrl+Shift+P`), PNG 2x Retina con copia automática al portapapeles (`Cmd/Ctrl+Shift+E`), y HTML independiente sin conexión (`Cmd/Ctrl+Shift+H`).
+- 🔒 **Local-first y privacidad absoluta**: Sus archivos permanecen en su disco local. Sin necesidad de internet, sin telemetría de contenido y sin registros de cuenta obligatorios.
+- ⌨️ **Contrato de interacción mínimo**: Doble clic en `.md` para abrir en modo lectura; presione `Esc` para cerrar; presione `F2` para edición en el lugar; presione `F3` para vista previa dividida.
 
 ---
 
-## Instalación
+## Descargas y Espejos
 
-Descarga el instalador más reciente para tu plataforma desde la página de
-**[GitHub Releases](https://github.com/qvcloud/QvReader/releases)**.
+Descargue el paquete v0.1.4 desde GitHub Releases oficial o a través de espejos CDN acelerados:
 
-| Plataforma | Artefacto |
-|---|---|
-| macOS (Apple Silicon e Intel) | `QvReader_<ver>_universal.dmg` |
-| Windows (x64) | `QvReader_<ver>_x64-setup.exe` / `.msi` |
-| Linux (Debian / AppImage) | `QvReader_<ver>_amd64.deb` / `.AppImage` |
+| Plataforma / Arquitectura | Archivo | GitHub Releases Oficial | Espejo Rápido 1 (ghfast) | Espejo Rápido 2 (gh-proxy) |
+|---|---|---|---|---|
+| **macOS** (Apple Silicon) | `QvReader-0.1.4-arm64.dmg` | [Descargar](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [Descarga Rápida](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [Alternativa](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) |
+| **macOS** (Intel x64) | `QvReader-0.1.4-x64.dmg` | [Descargar](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [Descarga Rápida](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [Alternativa](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) |
+| **Windows** (Instalador x64) | `QvReader-0.1.4-x64-setup.exe` | [Descargar](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [Descarga Rápida](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [Alternativa](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) |
+| **Windows** (Portable x64) | `QvReader-0.1.4-windows-x64.zip` | [Descargar](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [Descarga Rápida](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [Alternativa](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) |
+| **Linux** (AppImage x64) | `QvReader-0.1.4-amd64.AppImage` | [Descargar](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [Descarga Rápida](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [Alternativa](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) |
 
-> El repositorio donde vive esta página es el **hogar de la comunidad y las versiones**. El código fuente
-> se desarrolla en privado y se refleja en instaladores publicados bajo **Releases**.
-
-### Registrar el CLI `qvreader` (opcional)
-
-```bash
-# macOS: apunta el envoltorio a la app instalada
-qvreader README.md        # abrir un archivo
-qvreader .                # abrir la carpeta actual como espacio de trabajo
-```
+Versiones anteriores y sumas de verificación están en la [página de GitHub Releases](https://github.com/qvcloud/QvReader/releases).
 
 ---
 
-## Inicio rápido
+## Guía de Instalación y Confianza de Seguridad
 
-```bash
-# abrir un archivo concreto
-qvreader path/to/file.md
+Los paquetes de la comunidad de QvReader se compilan de forma transparente mediante GitHub Actions CI con sumas SHA256 públicas. Mientras se tramitan los certificados comerciales de firma de código, el sistema operativo puede mostrar una advertencia de seguridad. Siga estas instrucciones para confiar y ejecutar la aplicación:
 
-# abrir una carpeta como espacio de trabajo
-qvreader .
+### macOS (Apple Gatekeeper)
 
-# doble clic en cualquier archivo .md
-# simplemente se abre — lectura, de inmediato
-```
+Si aparece el aviso: *"No se puede abrir 'QvReader' porque no se puede verificar el desarrollador"* o *"La aplicación está dañada y no se puede abrir"*:
 
-**Lectura** → desplazarte, seguir enlaces, seleccionar texto.
-**Edición** → pulsa `F3` (dividida) o `F2` (en línea), haz cambios, `Cmd/Ctrl+S` para guardar, `Esc` para volver.
-**Navegación** → alterna la barra lateral de esquema / espacio de trabajo.
+1. **Autorización rápida en la interfaz gráfica**:
+   - Arrastre `QvReader.app` a `/Applications`.
+   - Haga **clic derecho** (o Control + clic) sobre `QvReader.app` y seleccione **"Abrir"**.
+   - En el cuadro de diálogo de confirmación, haga clic nuevamente en **"Abrir"**. La aplicación se ejecutará normalmente.
+2. **Comando de terminal (Recomendado)**:
+   ```bash
+   xattr -cr /Applications/QvReader.app
+   ```
+
+### Windows (Microsoft Defender SmartScreen)
+
+Si aparece una ventana azul indicando: *"Windows protegió su PC"*:
+
+1. Haga clic en el enlace **"Más información"** (More info).
+2. Haga clic en el botón **"Ejecutar de todas formas"** (Run anyway) que aparece abajo a la derecha.
+
+---
+
+## Atajos de Teclado Principales
+
+| Acción / Modo | Atajo (macOS) | Atajo (Windows/Linux) | Descripción |
+|---|---|---|---|
+| **Edición en el lugar** | `F2` | `F2` | Edición inmediata sobre el lienzo de lectura, **100% gratuita para siempre** |
+| **Vista previa dividida** | `F3` | `F3` | Código fuente a la izquierda y vista previa sincronizada a la derecha |
+| **Salir / Cerrar** | `Esc` | `Esc` | Sale del modo edición; cierra la ventana inmediatamente si no hay cambios |
+| **Guardar archivo** | `Cmd + S` | `Ctrl + S` | Conserva saltos de línea (LF/CRLF) y codificación (UTF-8) |
+| **Imprimir documento** | `Cmd + P` | `Ctrl + P` | Diálogo nativo de impresión con estilos económicos de tinta |
+| **Exportar a PDF** | `Cmd + Shift + P` | `Ctrl + Shift + P` | Salida vectorial en PDF de alta fidelidad |
+| **Exportar a imagen Retina** | `Cmd + Shift + E` | `Ctrl + Shift + E` | Captura 2x Retina copiada automáticamente al portapapeles |
+| **Exportar a HTML independiente**| `Cmd + Shift + H` | `Ctrl + Shift + H` | Archivo HTML completamente autónomo y sin conexión |
+| **Centro de Ajustes** | `Cmd + ,` | `Ctrl + ,` | Temas, modo de diseño (adaptativo/estándar/ancho completo) y tamaño de fuente |
+
+---
+
+## Ediciones y Modelo Comercial
+
+QvReader mantiene un modelo comercial transparente y local-first:
+
+- **Edición Comunitaria (Community Edition, gratuita para siempre)**:
+  - Experiencia de lectura completa y sin anuncios.
+  - Edición en el lugar con `F2` 100% gratuita y sin límites.
+  - La vista previa dividida `F3` y funciones avanzadas incluyen 300 sesiones de prueba.
+  - **No se bloquea al agotar la prueba**: Puede seguir usando el modo F3 libremente (solo aparece un aviso no intrusivo al cambiar de archivo), y **la edición y guardado de documentos nunca se bloquean**.
+- **Edición Pro (Pro Edition, $9.99 compra única vitalicia)**:
+  - Pago único con actualizaciones de por vida, sin suscripciones periódicas.
+  - Soporta **más de 3 dispositivos personales** (macOS y Windows combinados).
+  - **Activación 100% local sin conexión**, eliminando cualquier mensaje o aviso Pro.
+  - Garantía de reembolso de 14 días a través de [qvreader.com](https://qvreader.com).
 
 ---
 
 ## Documentación
 
-- [Uso y atajos](docs/es/usage.md)
-- [Características](docs/es/features.md)
-- [Desarrollo (compilar desde el código fuente)](docs/es/development.md)
-- [Proceso de versión](docs/es/release-process.md)
-- [Registro de cambios](CHANGELOG.md)
-
----
-
-## Estado del proyecto
-
-QvReader está en desarrollo activo. macOS es la plataforma principal de lanzamiento; Windows se
-publica vía CI. Linux se evalúa cuando la estabilidad central y la capacidad de prueba estén listas.
-
-Consulta [docs/es/roadmap.md](docs/es/roadmap.md) para lo planeado y lo explícitamente fuera de alcance.
+- [Guía Detallada de Funciones](docs/es/features.md)
+- [Manual de Uso y Atajos](docs/es/usage.md)
+- [Hoja de Ruta y Planes Futuros](docs/es/roadmap.md)
+- [Compilación desde el Código Fuente](docs/es/development.md)
+- [Proceso de Lanzamiento](docs/es/release-process.md)
+- [Registro de Cambios](CHANGELOG.md)
 
 ---
 
 ## Licencia
 
-[Apache License 2.0](LICENSE)
-
-```
-Copyright 2026 QvCloud (qvreader.com)
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+Distribuido bajo la [Licencia Apache 2.0](LICENSE).

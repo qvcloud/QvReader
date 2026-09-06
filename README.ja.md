@@ -4,151 +4,121 @@
 
 # QvReader
 
-**macOS と Windows 向けの超軽量・即時 Markdown リーダー & エディター**
+**macOS・Windows 向けの超軽量・即時起動 Markdown リーダー＆エディター**
 
-`.md` ファイルを開けば、ウェブページのようにミリ秒で読み始められます。クリーンで、
-邪魔のない、ドキュメント中心の体験。`F2` でその場編集、`F3` でライブな分割ビュー。完了したら `Esc` で終了。
+`.md` ファイルを開けば、Web ページのように快適に読める——ミリ秒単位のコールド起動、超高速レスポンス。クリーンで邪魔のない、文書に集中できる設計。  
+`F2` でその場でインライン編集、`F3` でリアルタイム分割プレビュー。読み終わったら `Esc` ですぐに終了。
+
+[![Version](https://img.shields.io/badge/Desktop-v0.1.4-blue.svg)](https://github.com/qvcloud/QvReader/releases/tag/v0.1.4)
+[![Website](https://img.shields.io/badge/Website-v1.0.8-emerald.svg)](https://qvreader.com)
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)](#ダウンロードとミラー)
 
 </div>
 
-**言語:** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Português (Brasil)](README.pt-BR.md) · [Español](README.es.md)
+**言語切り替え：** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
 
 ---
 
-## QvReader を選ぶ理由
+## なぜ QvReader なのか？
 
-多くの Markdown ツールは「大量に書くこと」を解決します。QvReader が解決するのは**ローカルの
-ドキュメントを素早く読んで軽く編集すること**——README、AI 生成ドキュメント、会議メモ、リリースノート。
+多くの Markdown ツールは「重厚な執筆」や「複雑なナレッジベース構築」を目的としています。QvReader は**ローカル Markdown ドキュメントの高速閲覧と軽快な編集**のために設計されています——README、AI 生成ドキュメント、技術仕様書、議事録、リリースノートなど。
 
-- **即座に開く。** ファイルをダブルクリックすれば読めます。プロジェクトも、ボールトも、ワークベンチも不要。
-- **超軽量。** ネイティブな Tauri アプリ——ブラウザエンジンを同梱しません。インストーラーは数 MB。
-- **邪魔のない読書。** すっきりしたタイポグラフィ。ページを覆うツールバーはありません。読書がデフォルト状態。
-- **ローカル優先。** ファイルは常にディスク上に残ります。アカウントもクラウドも、コンテンツのテレメトリーも不要。
-- **必要なときに編集。** 読書モードがソースを壊すことはありません。編集は明示的で、常に元のバイトを尊重します。
-
----
-
-## 機能
-
-### 読書（デフォルト）
-
-| 機能 | 詳細 |
-|---|---|
-| 即時オープン | `.md` をダブルクリック → 読書ビュー |
-| GFM レンダリング | 見出し、テーブル、タスクリスト、取り消し線、引用 |
-| シンタックスハイライト | highlight.js、フェンス言語の自動検出 |
-| 数式（KaTeX） | インライン & ブロック LaTeX |
-| ローカル画像 | 相対パスはドキュメントのディレクトリ基準で解決 |
-| TOC アウトライン | 見出しで長文をナビゲート、現在のセクションを強調 |
-| テーマ | ライト / ダーク / システム連動 + プリセット |
-| 文字サイズ | 本文サイズとズームを調整可能 |
-| ファイル監視 | 外部編集を検出し、上書き前に警告 |
-
-### 編集と作成
-
-| モード | ショートカット | ルールと動作 |
-|---|---|---|
-| **インライン編集** | `F2` | **基本コア機能・永久無料**。CodeMirror 6 で読書キャンバス上から直接編集 |
-| **分割ビュー** | `F3` | 左にソース、右にリアルタイム同期プレビュー。**毎日 20 回無料**、超過時ソフト案内で制限なし |
-| **読書モード** | `Esc` | クリーンな読書に戻る；未変更時はウィンドウを高速で閉じます |
-
-- `Cmd/Ctrl+S` で保存。**改行（LF/CRLF）とエンコーディング（UTF-8/BOM）を忠実に保持**。
-- 未保存の変更は厳格に保護されます——閉じる・終了・外部変更で静かにデータを失うことはありません。
-- 分割ビューはカーソル行をプレビュー側で揃えてハイライト。
-- すべてのビューが 1 つのドキュメント状態とアンドゥ履歴を共有。
-
-### エクスポートと共有
-
-- **標準印刷**（`Cmd/Ctrl+P`）：システム標準の印刷ダイアログ。インクと用紙に最適化されたレイアウト。永久無料。
-- **PDF エクスポート**（`Cmd/Ctrl+Shift+P`）：ガイド付きの直接 PDF 出力フロー。
-- **長画像 PNG エクスポート**（`Cmd/Ctrl+Shift+E`）：2x Retina 高解像度スナップショット。自動保存＆クリップボードコピー。
-- **スタンドアロン HTML エクスポート**（`Cmd/Ctrl+Shift+H`）：オフラインスタイルとレンダリングエンジンを内蔵した単一ファイル配布。
-- *（高度なエクスポートとワークスペース管理には 300 回の無料体験が含まれます。Pro 版は永久無制限）*
-
-### ワークスペースとプロジェクト管理
-
-- `Cmd/Ctrl+Shift+W` または上部ドロワーボタンで**ワークスペースファイルツリー**を展開。
-- ターミナルで `qvreader .` を実行すると、現在のフォルダをワークスペースとして即座に開きます。
+- ⚡ **圧倒的なネイティブ性能**：Rust と Tauri で構築され、バイナリサイズは約 5MB、JS エントリバンドルは 614KB、コールド起動は 50ms 未満。50,000 行以上の長大なドキュメントも 60 FPS で滑らかにスクロール。
+- 📐 **画面適応型フルードレイアウト**：ワイド画面での過剰な余白を排除する動的幅制御（896px〜1280px）。「適応（adaptive）/ 標準（standard）/ 全幅（full）」の 3 つの表示モードをサポート。
+- 📊 **Mermaid 図表の全画面拡大モーダル**：フローチャート、シーケンス図、アーキテクチャ図をネイティブ描画。ダブルクリックでドラッグ・パン・拡大が可能なインタラクティブ全画面モーダルを表示。
+- 📤 **4 つの全シーン出力パイプライン**：インクに優しい印刷（`Cmd/Ctrl+P`）、ベクター PDF 出力（`Cmd/Ctrl+Shift+P`）、2x Retina 高解像度 PNG（自動クリップボードコピー、`Cmd/Ctrl+Shift+E`）、完全独立オフライン HTML 出力（`Cmd/Ctrl+Shift+H`）。
+- 🔒 **ローカルファースト＆プライバシー**：ファイルは常にユーザーのディスク上に保持されます。インターネット接続不要、テレメトリ収集なし、アカウント登録不要。
+- ⌨️ **最小限の直感的インタラクション**：`.md` ダブルクリックで瞬時に閲覧、`Esc` で終了、`F2` でインライン編集、`F3` でリアルタイム分割プレビュー。
 
 ---
 
-## インストール
+## ダウンロードと高速ミラー
 
-**[GitHub Releases](https://github.com/qvcloud/QvReader/releases)** ページから、お使いのプラットフォームの
-最新インストーラーをダウンロードしてください。
+公式 GitHub Releases または検証済みの高速 CDN ミラーから v0.1.4 をダウンロードできます：
 
-| プラットフォーム | ファイル |
-|---|---|
-| macOS（Apple Silicon & Intel） | `QvReader_<ver>_universal.dmg` |
-| Windows（x64） | `QvReader_<ver>_x64-setup.exe` / `.msi` |
-| Linux（Debian / AppImage） | `QvReader_<ver>_amd64.deb` / `.AppImage` |
+| プラットフォーム | パッケージ | 公式 GitHub 直通 | 高速ミラー 1 (ghfast) | 高速ミラー 2 (gh-proxy) |
+|---|---|---|---|---|
+| **macOS** (Apple Silicon) | `QvReader-0.1.4-arm64.dmg` | [ダウンロード](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [高速ダウンロード](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [代替ダウンロード](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) |
+| **macOS** (Intel x64) | `QvReader-0.1.4-x64.dmg` | [ダウンロード](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [高速ダウンロード](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [代替ダウンロード](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) |
+| **Windows** (x64 インストーラー) | `QvReader-0.1.4-x64-setup.exe` | [ダウンロード](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [高速ダウンロード](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [代替ダウンロード](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) |
+| **Windows** (x64 ポータブル) | `QvReader-0.1.4-windows-x64.zip` | [ダウンロード](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [高速ダウンロード](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [代替ダウンロード](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) |
+| **Linux** (x64 AppImage) | `QvReader-0.1.4-amd64.AppImage` | [ダウンロード](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [高速ダウンロード](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [代替ダウンロード](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) |
 
-> このページが置かれているリポジトリは**コミュニティ & リリースのホーム**です。ソースコードは
-> プライベートで開発され、**Releases** で公開されるインストーラーにミラーされます。
-
-### `qvreader` CLI を登録（任意）
-
-```bash
-# macOS: ラッパーをインストール済みアプリに紐づける
-qvreader README.md        # ファイルを開く
-qvreader .                # 現在のフォルダをワークスペースとして開く
-```
+過去のバージョンやチェックサムは [GitHub Releases ページ](https://github.com/qvcloud/QvReader/releases) をご確認ください。
 
 ---
 
-## クイックスタート
+## インストールとセキュリティ信頼手順
 
-```bash
-# 特定のファイルを開く
-qvreader path/to/file.md
+QvReader のコミュニティリリースパッケージは GitHub Actions CI 上で透過的にビルドされ、ハッシュ値が公開されています。商用コード署名証明書の申請期間中、各 OS のセキュリティ機能により警告が表示される場合があります。下記の手順で信頼して実行してください：
 
-# フォルダをワークスペースとして開く
-qvreader .
+### macOS（Apple Gatekeeper）
 
-# .md ファイルをダブルクリック
-# すぐに読める——即座に
-```
+初回起動時に「開発元を検証できないため開けません」または「壊れているため開けません」と表示された場合：
 
-**読書** → スクロール、リンクを辿る、テキストを選択。
-**編集** → `F3`（分割）または `F2`（インライン）を押し、編集後に `Cmd/Ctrl+S` で保存、`Esc` で戻る。
-**ナビゲーション** → アウトライン / ワークスペースサイドバーを切り替え。
+1. **GUI でのクイック許可**：
+   - `QvReader.app` を `/Applications`（アプリケーションフォルダ）にドラッグします。
+   - `QvReader.app` を**右クリック**（または Control キーを押しながらクリック）し、**「開く」** を選択します。
+   - 確認ダイアログで再度 **「開く」** をクリックすると起動します（次回以降は通常起動できます）。
+2. **ターミナルでの一括属性解除（推奨）**：
+   ```bash
+   xattr -cr /Applications/QvReader.app
+   ```
+
+### Windows（Microsoft Defender SmartScreen）
+
+初回起動時に青い警告画面（「Windows によって PC が保護されました」）が表示された場合：
+
+1. 画面内の **「詳細情報」**（More info）をクリックします。
+2. 右下に表示される **「実行」**（Run anyway）をクリックします。
+
+---
+
+## 主なショートカット一覧
+
+| 機能 / モード | ショートカット（macOS） | ショートカット（Windows/Linux） | 説明 |
+|---|---|---|---|
+| **インライン編集** | `F2` | `F2` | 原位置での編集、**永久 100% 無料** |
+| **分割プレビュー** | `F3` | `F3` | ソースコードと同期プレビューを左右に並行表示 |
+| **終了 / 閉じる** | `Esc` | `Esc` | 編集モード終了；未変更時はウィンドウを閉じる |
+| **ドキュメント保存** | `Cmd + S` | `Ctrl + S` | 改行コード（LF/CRLF）と文字コード（UTF-8）を完全保持 |
+| **印刷** | `Cmd + P` | `Ctrl + P` | インクに配慮したスタイルのネイティブ印刷 |
+| **PDF 出力** | `Cmd + Shift + P` | `Ctrl + Shift + P` | 高品位ベクター PDF 出力 |
+| **Retina 長図出力** | `Cmd + Shift + E` | `Ctrl + Shift + E` | 2x Retina 高解像度 PNG（クリップボードに自動同期） |
+| **独立 HTML 出力** | `Cmd + Shift + H` | `Ctrl + Shift + H` | 完全自己完結型のオフライン HTML ファイル |
+| **設定センター** | `Cmd + ,` | `Ctrl + ,` | テーマ、排版モード（適応/標準/全幅）、フォントサイズ調整 |
+
+---
+
+## エディションと商用モデル
+
+QvReader は透明でローカルファーストなビジネスモデルを採用しています：
+
+- **コミュニティ版（Community Edition、永久無料）**：
+  - 中核のドキュメント閲覧機能は完全無料で広告なし。
+  - `F2` インライン編集は制限なく永久無料。
+  - `F3` 分割リアルタイムプレビュー等の高度機能は 300 回の試用が可能。
+  - **試用上限到達後もロックされず継続使用可能**（新規ファイルを開く際に緩やかな Pro 案内が表示されるのみ）、**ファイルの編集および保存は絶対にブロックされません**。
+- **Pro 版（$9.99 永久買い切り制）**：
+  - 一度の支払いで生涯アップデート付き、サブスクリプション不要。
+  - 1 ライセンスで **3 台以上の個人デバイス**（macOS と Windows 混在可能）をサポート。
+  - **100% ローカルオフライン認証**、Pro 案内ポップアップを完全非表示。
+  - [qvreader.com](https://qvreader.com) にて 14 日間返金保証付き。
 
 ---
 
 ## ドキュメント
 
-- [使い方とショートカット](docs/ja/usage.md)
-- [機能](docs/ja/features.md)
-- [開発（ソースからのビルド）](docs/ja/development.md)
+- [詳細機能ガイド](docs/ja/features.md)
+- [使用方法とショートカット](docs/ja/usage.md)
+- [ロードマップ](docs/ja/roadmap.md)
+- [ソースからのビルド](docs/ja/development.md)
 - [リリースプロセス](docs/ja/release-process.md)
-- [変更履歴](CHANGELOG.md)
-
----
-
-## プロジェクトの状態
-
-QvReader は活発に開発中です。macOS が主要なデイワンプラットフォームで、Windows は CI 経由で
-リリースされます。Linux はコアの安定性とテスト体制が整った後に評価します。
-
-計画中および明示的にスコープ外の内容は [docs/ja/roadmap.md](docs/ja/roadmap.md) をご覧ください。
+- [更新履歴](CHANGELOG.md)
 
 ---
 
 ## ライセンス
 
-[Apache License 2.0](LICENSE)
-
-```
-Copyright 2026 QvCloud (qvreader.com)
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+[Apache License 2.0](LICENSE) に基づいて配布されています。

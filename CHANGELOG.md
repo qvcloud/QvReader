@@ -32,8 +32,8 @@ All notable changes are tracked here. Format follows [Keep a Changelog](https://
 ### Changed
 - Streamlined right-click context menu: removed redundant appearance, width, and zoom toolbars from the document context menu, consolidating all preferences into the dedicated Settings Center (`⌘,`).
 - `F2` inline editing is permanently free with zero trial deductions and zero paywalls.
-- `F3` split-view editing includes 20 free uses daily in Community edition with non-blocking guidance beyond quota.
-- Pro feature free evaluation trial quota expanded from 100 to 300 sessions (workspace management, diagram rendering, and advanced exports).
+- `F3` split-view editing includes 300 free trial evaluation sessions in Community edition; remains accessible without hard-locking after trial exhaustion (non-blocking Pro purchase prompt upon file change; document saving never blocked).
+- Pro feature free evaluation trial quota expanded to 300 sessions (workspace management, diagram rendering, and advanced exports).
 - Official website downloads and API manifests synchronized with desktop client v0.1.3.
 
 ---

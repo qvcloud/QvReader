@@ -41,7 +41,7 @@ CI 工作流（`build-desktop.yml`）在推送 tag `v*` 时构建：
 - **Windows** —— `.msi` + NSIS `.exe`
 - **Linux** —— `.deb` + `.AppImage`
 
-产物会附加到 GitHub Release。参见 [.github/workflows](../.github/workflows/)。
+产物会自动附加到 [GitHub Releases](https://github.com/qvcloud/QvReader/releases)。
 
 ## 项目结构
 

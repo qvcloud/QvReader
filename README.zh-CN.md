@@ -6,148 +6,120 @@
 
 **适用于 macOS 与 Windows 的超轻量、即时 Markdown 阅读器与编辑器**
 
-打开一个 `.md` 文件，像浏览网页一样阅读——毫秒级响应。干净、无干扰、以文档为先。
-按 `F2` 就地编辑，按 `F3` 进入实时分屏预览。完成后按 `Esc` 即可离开。
+打开一个 `.md` 文件，像浏览网页一样阅读——毫秒级冷启，极速响应。干净、无干扰、以文档为中心。  
+按 `F2` 就地编辑，按 `F3` 进入实时分屏预览。阅读完毕按 `Esc` 即可秒速关闭。
+
+[![Version](https://img.shields.io/badge/Desktop-v0.1.4-blue.svg)](https://github.com/qvcloud/QvReader/releases/tag/v0.1.4)
+[![Website](https://img.shields.io/badge/Website-v1.0.8-emerald.svg)](https://qvreader.com)
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)](#下载与安装)
 
 </div>
 
-**语言：** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Português (Brasil)](README.pt-BR.md) · [Español](README.es.md)
+**语言切换：** [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
 
 ---
 
 ## 为什么选择 QvReader？
 
-多数 Markdown 工具解决的是"大量写作"。QvReader 解决的是**快速阅读与轻量编辑本地文档**——
-README、AI 生成的文档、会议纪要、发布说明。
+大多数 Markdown 工具侧重于“重度内容写作”或“网状笔记库”。QvReader 专为**极速阅读、快速查阅与轻量编辑本地 Markdown 文档**而生——
+无论是项目的 README、AI 生成的代码文档、技术规范，还是会议纪要与发布说明。
 
-- **秒开。** 双击文件即可阅读。没有项目、没有资料库、没有工作台。
-- **体积极小。** 原生 Tauri 应用——不打包浏览器引擎，安装包仅几 MB。
-- **无干扰阅读。** 干净的排版，没有挤占页面的工具栏。阅读是默认状态。
-- **本地优先。** 文件始终留在你的磁盘上。无需账号、无云端、不采集你的内容。
-- **需要时才编辑。** 阅读永远不会破坏你的源文件。编辑是显式操作，始终尊重你的原始字节。
-
----
-
-## 功能特性
-
-### 阅读（默认）
-
-| 能力 | 说明 |
-|---|---|
-| 即时打开 | 双击 `.md` → 阅读视图 |
-| GFM 渲染 | 标题、表格、任务列表、删除线、引用 |
-| 代码高亮 | highlight.js，自动识别围栏语言 |
-| 数学公式（KaTeX） | 行内与块级 LaTeX |
-| 本地图片 | 相对路径基于文档所在目录解析 |
-| 目录大纲 | 按标题导航长文档；高亮当前章节 |
-| 主题 | 浅色 / 深色 / 跟随系统 + 预设 |
-| 智能屏宽适配 | 响应式流式布局（896px~1280px），告别两侧过宽留白，支持自适应/标准/全宽 3 种排版模式 |
-| 字号 | 可调节正文字号与缩放 |
-| 文件监听 | 检测外部修改，覆盖前提醒 |
-
-### 编辑与创作
-
-| 模式 | 快捷键 | 规则与作用 |
-|---|---|---|
-| **就地编辑** | `F2` | **基础核心功能，永久免费**。基于 CodeMirror 6 在阅读画布原位编辑，免除界面跳转 |
-| **分屏视图** | `F3` | 左侧源码、右侧毫秒级实时预览。**每天 20 次免费**，超额后弹窗提醒不限制使用 |
-| **阅读模式** | `Esc` | 无缝回到干净阅读模式；未修改时按 `Esc` 快速关闭窗口 |
-
-- `Cmd/Ctrl+S` 保存，**保留换行（LF/CRLF）与编码（UTF-8/BOM）** 的一致性。
-- 未保存的修改受到严格保护——关闭、退出或外部变更时不会静默丢失数据。
-- 分屏视图保持光标行在预览端高亮对齐。
-- 所有视图共享同一文档状态与撤销历史。
-
-### 导出与分享
-
-- **标准打印**（`Cmd/Ctrl+P`）：系统原生打印对话框，墨水友好的排版样式，永久免费。
-- **导出为 PDF**（`Cmd/Ctrl+Shift+P`）：带格式引导的直接 PDF 输出。
-- **导出为长图 PNG**（`Cmd/Ctrl+Shift+E`）：2x Retina 高清全文档渲染截图，自动下载并同步复制到剪贴板。
-- **导出为独立 HTML**（`Cmd/Ctrl+Shift+H`）：单文件独立便携分发，离线嵌入样式与渲染引擎。
-- *（高级导出与工作区管理内置 300 次免费试用配额，Pro 版永久无限制）*
-
-### 工作区与多文档管理
-
-- 快捷键 `Cmd/Ctrl+Shift+W` 或点击顶部抽屉按钮展开**文件夹工作区**，带直观文件树侧栏。
-- 在终端执行 `qvreader .` 可一键将当前文件夹作为工作区载入。
+- ⚡ **原生极致性能**：基于 Rust 与 Tauri 构建，安装包仅约 5MB，JS 入口 614KB，冷启动低于 50ms。轻松支撑 50,000+ 行超长文档以 60 FPS 流畅滚动。
+- 📐 **智能屏宽排版**：内置响应式流式布局（896px~1280px），告别宽屏两侧过宽留白，支持“自适应 / 标准 / 全宽”3 种排版模式。
+- 📊 **Mermaid 图表全屏缩放**：原生渲染流程图、时序图与架构图，支持双击弹出全屏交互式缩放弹窗（拖拽、平移、放大）。
+- 📤 **4 种全场景导出流水线**：墨水友好打印（`Cmd/Ctrl+P`）、高保真矢量 PDF（`Cmd/Ctrl+Shift+P`）、2x Retina 高清长图自动复制到剪贴板（`Cmd/Ctrl+Shift+E`）、独立离线单文件 HTML（`Cmd/Ctrl+Shift+H`）。
+- 🔒 **本地优先与纯粹隐私**：文档完全留在本地磁盘，无需网络连接、不采集文档内容、无强制账户注册。
+- ⌨️ **极简核心交互契约**：双击 `.md` 毫秒级进入阅读模式；按 `Esc` 退出；按 `F2` 就地原位编辑；按 `F3` 进入实时分屏协同。
 
 ---
 
-## 安装
+## 下载与高速镜像
 
-从 **[GitHub Releases](https://github.com/qvcloud/QvReader/releases)** 页面下载对应平台的安装包。
+从官方 GitHub Releases 或经过验证的国内高速 CDN 加速镜像下载 v0.1.4 安装包：
 
-| 平台 | 文件 |
-|---|---|
-| macOS（Apple Silicon 与 Intel） | `QvReader_<ver>_universal.dmg` |
-| Windows（x64） | `QvReader_<ver>_x64-setup.exe` / `.msi` |
-| Linux（Debian / AppImage） | `QvReader_<ver>_amd64.deb` / `.AppImage` |
+| 平台架构 | 安装包文件 | 官方 GitHub 直连 | 国内高速镜像 1 (ghfast) | 国内高速镜像 2 (gh-proxy) |
+|---|---|---|---|---|
+| **macOS** (Apple Silicon) | `QvReader-0.1.4-arm64.dmg` | [下载](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [高速下载](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) | [备用下载](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-arm64.dmg) |
+| **macOS** (Intel x64) | `QvReader-0.1.4-x64.dmg` | [下载](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [高速下载](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) | [备用下载](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64.dmg) |
+| **Windows** (x64 安装版) | `QvReader-0.1.4-x64-setup.exe` | [下载](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [高速下载](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) | [备用下载](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-x64-setup.exe) |
+| **Windows** (x64 便携版) | `QvReader-0.1.4-windows-x64.zip` | [下载](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [高速下载](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) | [备用下载](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-windows-x64.zip) |
+| **Linux** (x64 AppImage) | `QvReader-0.1.4-amd64.AppImage` | [下载](https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [高速下载](https://ghfast.top/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) | [备用下载](https://gh-proxy.com/https://github.com/qvcloud/QvReader/releases/download/v0.1.4/QvReader-0.1.4-amd64.AppImage) |
 
-> 本页面所在的仓库是**社区与发布主页**。源代码在私有仓库开发，最终镜像为 **Releases** 下的安装包。
-
-### 注册 `qvreader` CLI（可选）
-
-```bash
-# macOS：让包装脚本指向已安装的应用
-qvreader README.md        # 打开文件
-qvreader .                # 将当前文件夹作为工作区打开
-```
+更多历史版本与校验码见 [GitHub Releases 页面](https://github.com/qvcloud/QvReader/releases)。
 
 ---
 
-## 快速上手
+## 安装与系统安全信任指引
 
-```bash
-# 打开指定文件
-qvreader path/to/file.md
+QvReader 社区发行包由 GitHub Actions 自动化透明构建并提供哈希校验。在正式申请商业代码签名证书前，部分系统会弹出默认拦截提示，请按下方指引一键信任运行：
 
-# 将文件夹作为工作区打开
-qvreader .
+### macOS 系统（Apple Gatekeeper）
 
-# 双击任意 .md 文件
-# 立即进入阅读
-```
+若首次启动时出现系统提示：“无法打开‘QvReader’，因为无法验证开发者”或“App 已损坏，无法打开”：
 
-**阅读** → 滚动、点击链接、选中文本。
-**编辑** → 按 `F3`（分屏）或 `F2`（就地），修改后用 `Cmd/Ctrl+S` 保存，按 `Esc` 返回。
-**导航** → 切换大纲 / 工作区侧栏。
+1. **图形界面快速信任**：
+   - 将 `QvReader.app` 拖入 `/Applications`（应用程序目录）。
+   - **右键点击** `QvReader.app`，在弹出菜单中选择 **“打开”**。
+   - 在系统确认对话框中再次点击 **“打开”** 即可正常进入，后续启动无需重复操作。
+2. **终端一键解除隔离属性（推荐）**：
+   ```bash
+   xattr -cr /Applications/QvReader.app
+   ```
 
----
+### Windows 系统（Microsoft Defender SmartScreen）
 
-## 文档
+若首次启动时出现蓝色提示窗口：“Windows 已保护你的电脑”：
 
-- [用法与快捷键](docs/zh-CN/usage.md)
-- [功能特性](docs/zh-CN/features.md)
-- [开发（从源码构建）](docs/zh-CN/development.md)
-- [发布流程](docs/zh-CN/release-process.md)
-- [更新日志](CHANGELOG.md)
+1. 点击弹窗中的 **“更多信息”**（More info）链接。
+2. 点击右下角出现的 **“仍要运行”**（Run anyway）按钮即可正常启动。
 
 ---
 
-## 项目状态
+## 核心快捷键一览
 
-QvReader 正在积极开发。macOS 是主要、day-one 平台；Windows 经 CI 发布。
-Linux 待核心稳定性与测试能力就绪后评估。
-
-参见 [docs/zh-CN/roadmap.md](docs/zh-CN/roadmap.md) 了解规划中与明确排除的功能。
+| 模式 / 动作 | 快捷键（macOS） | 快捷键（Windows/Linux） | 说明 |
+|---|---|---|---|
+| **就地编辑** | `F2` | `F2` | 核心基础功能，原位即时编辑，**永久 100% 免费** |
+| **分屏实时预览** | `F3` | `F3` | 左侧源码，右侧毫秒级同步预览，双向光标同步 |
+| **退出 / 关闭** | `Esc` | `Esc` | 退出编辑模式；未修改时快速关闭窗口 |
+| **保存文件** | `Cmd + S` | `Ctrl + S` | 严格保留原始编码与换行符（LF / CRLF） |
+| **系统打印** | `Cmd + P` | `Ctrl + P` | 原生打印对话框与墨水优化样式 |
+| **导出 PDF** | `Cmd + Shift + P` | `Ctrl + Shift + P` | 高保真矢量 PDF 输出 |
+| **导出高清长图** | `Cmd + Shift + E` | `Ctrl + Shift + E` | 2x Retina 高清长图并自动复制到剪贴板 |
+| **导出单文件 HTML**| `Cmd + Shift + H` | `Ctrl + Shift + H` | 离线便携式自包含独立 HTML 文件 |
+| **设置中心** | `Cmd + ,` | `Ctrl + ,` | 主题、排版模式（自适应/标准/全宽）、字体大小调节 |
 
 ---
 
-## 许可证
+## 版本与商业化边界
 
-[Apache License 2.0](LICENSE)
+QvReader 秉承透明、本地优先的商业化模式：
 
-```
-Copyright 2026 QvCloud (qvreader.com)
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+- **社区版（Community Edition，永久免费）**：
+  - 核心阅读功能 100% 永久免费，无任何弹窗广告。
+  - `F2` 就地编辑功能 100% 永久免费，无任何额度限制。
+  - `F3` 分屏实时预览与高级功能内置 300 次开箱试用体验。
+  - **额度用尽后绝不锁死**：用户切换至 F3 分屏模式仍可继续无障碍使用（仅在打开/切换新文件时弹出温和的 Pro 购买提示），**文件的保存与编辑能力永不拦截**。
+- **专业版（Pro Edition，$9.99 永久买断制）**：
+  - 一次性付费买断，终身免费升级，无任何循环订阅。
+  - 单许可支持 **3+ 台个人设备**（支持 macOS 与 Windows 混合激活）。
+  - **100% 本地离线激活**，彻底免除一切 Pro 功能购买提示。
+  - 官方支持 14 天退款保障，详情可访问 [qvreader.com](https://qvreader.com)。
 
-    http://www.apache.org/licenses/LICENSE-2.0
+---
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+## 深入文档
+
+- [功能特性深入详解](docs/zh-CN/features.md)
+- [日常使用与快捷键手册](docs/zh-CN/usage.md)
+- [项目路线图与规划](docs/zh-CN/roadmap.md)
+- [本地源码编译与开发指引](docs/zh-CN/development.md)
+- [版本发布流程](docs/zh-CN/release-process.md)
+- [版本更新日志](CHANGELOG.md)
+
+---
+
+## 开源许可证
+
+本项目基于 [Apache License 2.0](LICENSE) 协议分发。

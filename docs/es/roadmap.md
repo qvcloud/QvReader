@@ -1,39 +1,37 @@
-# Hoja de ruta
+# Hoja de Ruta
 
-Una visión transparente de lo que QvReader planea y de lo que deliberadamente no está construyendo.
-Los elementos entran en desarrollo solo después de estar especificados y de demostrar que no dañan la
-velocidad de inicio, el tamaño del binario, la fidelidad del Markdown o la experiencia central de lectura.
+Una vista transparente de lo que QvReader está planificando, lo que ya ha entregado y lo que evita deliberadamente.
+Solo las características que superan estrictas puertas de especificación y demuestran no perjudicar la velocidad de inicio, el tamaño binario, la fidelidad de Markdown o la experiencia de lectura central se integran en el desarrollo.
 
-## Candidatos de alta prioridad
+---
 
-- **Metas de rendimiento para documentos grandes** — objetivos cuantificados de carga y desplazamiento,
-  no solo "se abre".
-- **Actualización en vivo de archivos externos** — cuando otro editor / un agente de IA reescribe el archivo,
-  actualiza sin pérdida de datos.
-- **Resaltado de vínculo de bloque fuente ↔ vista previa** — más fino que el desplazamiento sincronizado simple.
-- **Pulido nativo de macOS** — UX de asociación de archivos, menús, atajos por plataforma.
+## Metas Alcanzadas (v0.1.0 ~ v0.1.4)
 
-## Secundarios / evaluados después
+- [x] **Rendimiento Extremo y Optimización de Paquete (v0.1.4)**: Binario nativo de ~5MB, bundle de entrada JS de 614KB, fuentes matemáticas 100% WOFF2, inicio en frío <50 ms, desplazamiento fluido a 60 FPS en documentos de más de 50.000 líneas.
+- [x] **Motor de Diseño Fluido Adaptativo a la Pantalla (v0.1.3)**: Anchura dinámica (896px–1280px) que elimina márgenes vacíos en pantallas anchas, con 3 modos (`adaptativo`, `estándar`, `ancho completo`).
+- [x] **Modal Interactivo de Zoom para Diagramas Mermaid (v0.1.3)**: Renderizado nativo de diagramas de flujo, secuencia y arquitectura con modal de pantalla completa activable por doble clic (arrastre y ampliación).
+- [x] **Canal de Exportación en 4 Vías (v0.1.3)**: Impresión nativa económica en tinta, PDF vectorial de alta fidelidad, imagen 2x Retina con copia al portapapeles y HTML autónomo sin conexión.
+- [x] **Contrato de Interacción Mínimo (v0.1.0)**: Lectura inmediata al hacer doble clic en `.md`, `Esc` para cerrar, `F2` para editar en el lugar, `F3` para vista previa dividida sincronizada.
+- [x] **Fidelidad de Bytes Originales y Guardado Seguro (v0.1.0)**: Preservación de saltos de línea LF/CRLF y codificación UTF-8, detección de conflictos externos y protección contra pérdida de cambios no guardados.
+- [x] **Localización Completa en 6 Idiomas (v0.1.0 ~ v0.1.3)**: Simetría total en Español, English, 简体中文, 日本語, 한국어 y Português (Brasil).
 
-- Exportación nativa en **PDF**, exportación **HTML** de archivo único.
-- Diagramas **Mermaid** y **matemáticas** más ricas como extensiones opcionales de carga diferida.
-- Compatibilidad con **Linux** — solo cuando las funciones centrales estén estables y exista capacidad de prueba.
-- Compilación de Windows portátil ("verde").
-- Foco en tablas con reconocimiento de Markdown / lectura a pantalla completa.
+---
 
-## Explícitamente fuera de alcance
+## Candidatos Futuros (v0.1.5+)
 
-La carta fija el límite. QvReader no perseguirá "ser todo":
+- 🔄 **Integración de Firma de Código y Notarización**: Firma oficial de Apple Developer ID y notarización (eliminando avisos de Gatekeeper) y certificados de firma de código abierto para Windows con SignPath.
+- 🔄 **Notificaciones de Actualización Automática**: Verificación silenciosa en el inicio contra GitHub Releases, mostrando notas de versión de forma elegante.
+- 🔄 **Mejoras en Bloques de Código**: Alternancia de números de línea, animación de confirmación de copia y plegado de bloques extensos de código.
+- 🔄 **Paquetes para el Ecosistema Linux**: Expansión a canales oficiales de distribución Flatpak y Snap.
 
-- Sincronización en la nube / unidades integradas / sincronización con hosting Git.
-- Publicación de blogs o CMS.
-- Cuentas, pagos, activación, licenciamiento o telemetría que lea tu contenido.
-- Establecer silenciosamente asociaciones de archivo predeterminadas.
-- Carreras de paridad de funciones con Typora / Obsidian / IDEs completos.
+---
 
-Cada elemento de la hoja de ruta está limitado por las preguntas de revisión del proceso de especificación:
-¿Sirve a un escenario real y frecuente? ¿Preserva "abrir rápido, leer bien, no interrumpir"? ¿Cuál es su
-impacto medible en tamaño/inicio/memoria? ¿Toca el formato fuente? ¿Cuál es la interacción equivalente por
-plataforma? ¿Implica red/cuenta/pago/privacidad?
+## Características Excluidas Deliberadamente
 
-El trabajo candidato se discute en el [rastreador de issues](https://github.com/qvcloud/QvReader/issues).
+- Sincronización obligatoria en la nube o integración remota con Git (prioridad Local-First absoluta).
+- Suscripciones mensuales recurrentes (compra única de por vida).
+- Publicación de blogs o integración con CMS.
+- Herramientas pesadas de IDE o gráficos de conocimiento complejos.
+- Publicidad intrusiva o avisos visualmente molestos durante la lectura.
+
+Los debates de funciones se desarrollan abiertamente en el [rastreador de problemas de GitHub](https://github.com/qvcloud/QvReader/issues).

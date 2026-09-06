@@ -42,7 +42,7 @@ CI 워크플로(`build-desktop.yml`)는 tag `v*` 푸시 시 빌드합니다:
 - **Windows** — `.msi` + NSIS `.exe`
 - **Linux** — `.deb` + `.AppImage`
 
-산출물은 GitHub Release에 첨부됩니다.[.github/workflows](../.github/workflows/) 참조.
+산출물은 자동으로 [GitHub Releases](https://github.com/qvcloud/QvReader/releases)에 첨부됩니다.
 
 ## 프로젝트 구조
 

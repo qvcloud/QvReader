@@ -1,63 +1,68 @@
-# Features
+# Features & Capabilities
 
-A concise, honest description of what QvReader does today and what it deliberately does not.
+A concise and transparent overview of what QvReader does today, and what it intentionally avoids.
 
-## Product position
+## Product Philosophy
 
-QvReader is a **lightweight, fast, document-first Markdown reader** with just enough editing.
-It targets the "read a README / AI-generated doc / local note quickly" moment — open it, read
-it like a web page, edit on the spot if needed, close with `Esc`. It is **not** an IDE, a
-knowledge-base, a cloud-synced vault, or a full CMS.
+QvReader is an **ultra-lightweight, high-speed, document-first Markdown reader** with just enough editing power.
+It addresses the frequent scenario of "quickly opening a README, an AI-generated code doc, or a local note" — open it, read it like a clean web page, make in-place tweaks when needed, and press `Esc` to dismiss. It is **not** an IDE, a personal knowledge management graph, a cloud database, or a complex CMS.
 
-Core values (from the project charter):
+Core values (from the project constitution):
 
-1. Fast to open, small to install.
-2. Clean reading surface, no clutter.
-3. Reading is the default; editing is explicit so you can't accidentally change source.
-4. Editing is enough for real fixes, never a heavy editor.
-5. Local files, local-first, no required account or cloud.
+1. Fast to open, minimal bundle footprint (~5MB native binary, <50ms cold launch).
+2. Clean, distraction-free reading canvas without clutter.
+3. Reading is default; editing is explicit, preventing accidental modifications.
+4. Editing is powerful enough for genuine edits without becoming a heavy editor.
+5. Local files, local-first: no internet connection required, 100% private.
 
-## Feature Tiers & Edition Matrix
+---
 
-### Community Edition (100% Free Forever)
+## Editions & Feature Matrix
 
-- **Instant High-Fidelity Reading**: Full CommonMark / GFM typography, <50ms cold launch, ultralow memory footprint.
-- **Byte-Preserving Source Fidelity**: Source file is the sole source of truth. Unknown syntax, line endings (LF/CRLF), and character encodings (UTF-8/BOM) are preserved completely intact.
-- **F2 In-Place Inline Edit (Core Feature, 100% Free)**: CodeMirror 6 powered editing right on the canvas. No trial count deductions, no popups, no restrictions.
-- **F3 Real-Time Split View**: 20 free daily uses; exceeding 20 uses triggers a gentle, non-blocking Pro suggestion on new files, leaving split-view editing and live preview unrestricted upon dismissal.
-- **Engineering Diagrams & Math**: Native Mermaid.js diagrams, KaTeX block and inline LaTeX math typesetting.
-- **Reading Navigation & Interaction**: Floating right-click context menu, table of contents (TOC) outline drawer, pre-configured themes, and font zooming.
-- **Native OS Printing**: Dedicated `@media print` layout invoked via `Cmd/Ctrl+P`, optimized for paper margins and ink economy.
-- **Cross-Platform CLI**: Direct invocation from terminal (`qvreader <file>` / `qvreader .`).
-- **Complete Internationalization**: Native support for 6 constitutional languages (English, 简体中文, 日本語, 한국어, Español, Português).
+### Community Edition (Permanently Free)
 
-### Pro Edition ($9.99 USD One-Time Lifetime Buyout)
+- **Instant High-Performance Reading**: Full CommonMark / GFM support, <50ms cold launch, minimal memory usage. Smoothly handles 50,000+ line documents at 60 FPS.
+- **Screen-Adaptive Fluid Layout**: Dynamic responsive reading width (896px–1280px) with 3 selectable modes (`adaptive`, `standard`, `full`) in Settings.
+- **Source Byte Fidelity**: The source file remains the canonical truth. Line endings (LF/CRLF), encodings (UTF-8/BOM), and unsupported syntax are strictly preserved.
+- **F2 Inline Editing (Core Feature, Free Forever)**: Powered by CodeMirror 6, edits right on the reading canvas with zero paywalls or quotas.
+- **F3 Synchronized Split View**: Side-by-side editing and live preview. Comes with 300 free trial evaluation sessions; **never locked out after exhaustion** (a gentle purchase reminder appears when opening new files), and **document editing and saving are never blocked**.
+- **Engineering Diagrams & Math**: Native Mermaid diagram rendering and KaTeX inline/block LaTeX formulas. Includes an **interactive double-click Mermaid zoom modal** with panning, dragging, and full-screen inspection.
+- **Document Navigation**: Outline sidebar (TOC), right-click context menu, built-in themes, and font size scaling.
+- **Native System Print**: `Cmd/Ctrl+P` launches the system print dialog with ink-friendly, margin-optimized styling.
+- **Cross-Platform CLI**: Launch files or directories from terminal (`qvreader <file>` / `qvreader .`).
+- **Full Internationalization**: Built-in support for 6 constitutional languages (English, 简体中文, 日本語, 한국어, Español, Português (Brasil)).
 
-- **Evaluation Trial**: Community Edition comes with a 300-session free evaluation quota for Pro features to test directly on your local files.
-- **Workspace Management**: Folder tree drawer (`Cmd/Ctrl+Shift+W`) to seamlessly browse and organize multi-document projects.
-- **Advanced Export Pipeline**:
-  - **Direct PDF Export** (`Cmd/Ctrl+Shift+P`): Guided direct PDF export process.
-  - **High-Resolution PNG Image Export** (`Cmd/Ctrl+Shift+E`): 2x Retina pixel-perfect full-document image export with automatic clipboard copy.
-  - **Standalone Self-Contained HTML Export** (`Cmd/Ctrl+Shift+H`): Self-contained offline HTML file with embedded styles and engines for portable sharing.
-- **100% Offline Local Activation**: Lifetime license with ≥3 personal devices, authenticated locally with cryptographic signatures and zero cloud telemetry.
+### Pro Edition ($9.99 Lifetime Buyout)
 
-## Cross-platform
+- **Extensive Free Trial**: Community Edition includes 300 evaluation sessions for Pro features without requiring up-front purchase.
+- **Workspace File Management**: Drawer sidebar and project tree (`Cmd/Ctrl+Shift+W`) for seamless navigation across multi-file directories.
+- **Full Export Pipeline**:
+  - **Vector PDF Export** (`Cmd/Ctrl+Shift+P`): Direct high-fidelity PDF generation.
+  - **Retina PNG Export** (`Cmd/Ctrl+Shift+E`): 2x Retina full-document screenshot with automatic clipboard copy.
+  - **Standalone HTML Export** (`Cmd/Ctrl+Shift+H`): Portable offline single-file HTML bundle.
+- **100% Offline Activation & Local-First**: Perpetual license valid for lifetime updates, supporting ≥3 personal devices across macOS and Windows with offline verification and no Pro reminder modals.
 
-| Platform | Status |
-|---|---|
-| macOS (Apple Silicon + Intel, universal) | Primary, supported |
-| Windows (x64) | Supported via CI |
-| Linux (Debian / AppImage) | Evaluated after core stability |
+---
 
-## Explicitly out of scope
+## Platform Support
 
-The project charter excludes the following to protect the "fast, small, focused" identity:
+| Platform / Architecture | Status | Release Package |
+|---|---|---|
+| macOS (Apple Silicon / arm64) | Primary Day-One | `QvReader-0.1.4-arm64.dmg` |
+| macOS (Intel / x64) | Primary Day-One | `QvReader-0.1.4-x64.dmg` |
+| Windows (x64) | Supported via CI | `QvReader-0.1.4-x64-setup.exe` / `.zip` |
+| Linux (Debian / AppImage) | Evaluated post-stability | `QvReader-0.1.4-amd64.AppImage` |
 
-- Mandatory online connection and cloud content sync (strict adherence to Local-First principles; documents never leave your machine).
-- Mandatory recurring monthly subscriptions (fair, transparent one-time lifetime buyout).
-- Blog publishing, social-media formatting, or generic CMS platforms.
-- Bloating into a heavy IDE or bulky knowledge base competing with VS Code or Obsidian.
-- Forcing or silently setting default operating system file associations.
-- Disruptive ads, sponsored banners, or visual noise (such as `PRO` badges) in the reading interface.
+---
 
-See also [roadmap.md](roadmap.md) for candidate future work.
+## Intentionally Excluded Features
+
+To protect QvReader's core mission of being fast, lightweight, and focused, the following are explicitly out of scope:
+
+- Mandatory cloud accounts, online syncing, or remote telemetry.
+- Monthly or recurring subscriptions (strictly one-time buyout).
+- Blog publishing, social sharing platforms, or web CMS integrations.
+- Heavy IDE features or bloated knowledge-graph databases.
+- Intrusive popups, aggressive upsell dialogs, or visual badges during reading.
+
+See [roadmap.md](roadmap.md) for planned and completed milestones.
