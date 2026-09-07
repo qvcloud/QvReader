@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qvreader.com/schemas/release-provenance.schema.json",
+  "title": "QvReader Release Provenance Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "version",
+    "tag",
+    "sourceRepository",
+    "sourceCommit",
+    "workflowRun",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "tag": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "sourceRepository": {
+      "type": "string",
+      "format": "uri",
+      "const": "https://github.com/qvcloud/QvReader"
+    },
+    "sourceCommit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "workflowRun": {
+      "type": "string",
+      "format": "uri"
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/artifact" }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "platform",
+        "architecture",
+        "packageType",
+        "sizeBytes",
+        "sha256",
+        "signatureStatus",
+        "sbom",
+        "attestation"
+      ],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "platform": {
+          "enum": ["macos", "windows", "linux"]
+        },
+        "architecture": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageType": {
+          "enum": ["dmg", "msi", "nsis", "appimage", "deb", "zip"]
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "signatureStatus": {
+          "enum": ["unsigned", "signed", "notarized", "not-applicable"]
+        },
+        "sbom": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "attestation": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      }
+    }
+  }
+}
