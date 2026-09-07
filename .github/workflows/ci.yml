@@ -1,0 +1,77 @@
+name: Public CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Public Build & Verify (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macos-14, ubuntu-22.04, windows-2022 ]
+    steps:
+      - name: Checkout Public Source
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Linux Build Dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libsecret-1-dev
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.82.0
+          components: rustfmt, clippy
+
+      - name: Cache Cargo Dependencies
+        uses: actions/cache@13aacd865c20de90d75de166421e5ddf2f111e38 # v4.0.0
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            src-tauri/target/
+          key: ${{ runner.os }}-cargo-locked-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-locked-
+
+      - name: Verify Public Source Boundary
+        if: runner.os != 'Windows'
+        run: |
+          chmod +x scripts/verify-source-boundary.sh
+          ./scripts/verify-source-boundary.sh
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Run Frontend Tests
+        run: npm run test
+
+      - name: Build Frontend Application
+        run: npm run build
+
+      - name: Run Native Rust Unit and Contract Tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml --locked

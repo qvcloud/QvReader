@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+		QvReader may be launched as a workspace by passing a folder to it from the
+		terminal, e.g. `qvreader .`. For macOS to route a folder through the native
+		open mechanism (`open -a QvReader <folder>` / LaunchServices) the app must
+		declare itself a handler for `public.folder`. Tauri generates the Markdown
+		document types from tauri.conf.json `bundle.fileAssociations`; this extra
+		entry only ADDS folder handling on top of them.
+	-->
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<!-- Markdown Documents (*.md, *.markdown, *.mdx, etc.) -->
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Markdown Document</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkd</string>
+				<string>mkdn</string>
+				<string>mdx</string>
+				<string>txt</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>icon</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.daringfireball.markdown</string>
+				<string>text/markdown</string>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+			</array>
+		</dict>
+		<!-- QvReader Workspace Folder -->
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>QvReader Workspace Folder</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.folder</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- Uniform Type Identifiers declaration for Markdown on macOS -->
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>net.daringfireball.markdown</string>
+			<key>UTTypeDescription</key>
+			<string>Markdown Document</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>md</string>
+					<string>markdown</string>
+					<string>mdown</string>
+					<string>mkd</string>
+					<string>mkdn</string>
+					<string>mdx</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>text/markdown</string>
+					<string>text/x-markdown</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

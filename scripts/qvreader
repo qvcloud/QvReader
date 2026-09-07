@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#
+# qvreader — terminal launcher for QvReader.
+#
+set -euo pipefail
+
+find_app() {
+  if [[ -n "${QVR_APP:-}" && -d "$QVR_APP" ]]; then
+    printf '%s' "$QVR_APP"
+    return
+  fi
+  if [[ -d "/Applications/QvReader.app" ]]; then
+    printf '%s' "/Applications/QvReader.app"
+    return
+  fi
+  local repo_app
+  repo_app="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)/src-tauri/target"
+  local candidate
+  for candidate in "$repo_app"/release/bundle/macos/QvReader.app \
+                   "$repo_app"/debug/bundle/macos/QvReader.app \
+                   "$repo_app"/universal-apple-darwin/release/bundle/macos/QvReader.app; do
+    if [[ -d "$candidate" ]]; then
+      printf '%s' "$candidate"
+      return
+    fi
+  done
+  return 1
+}
+
+APP_PATH="$(find_app || true)"
+if [[ -z "$APP_PATH" ]]; then
+  echo "qvreader: could not locate QvReader.app." >&2
+  echo "  Install it to /Applications or set QVR_APP=/path/to/QvReader.app" >&2
+  exit 1
+fi
+
+APP_NAME="$(basename "$APP_PATH" .app)"
+
+declare -a targets=()
+for arg in "$@"; do
+  if [[ "$arg" == -* ]]; then
+    continue
+  fi
+  if [[ -e "$arg" || -L "$arg" ]]; then
+    if [[ -d "$arg" ]]; then
+      targets+=("$(cd "$arg" 2>/dev/null && pwd)")
+    elif [[ "$arg" == /* ]]; then
+      targets+=("$arg")
+    else
+      targets+=("$(pwd)/$arg")
+    fi
+  else
+    echo "qvreader: path not found: $arg" >&2
+  fi
+done
+
+if [[ ${#targets[@]} -eq 0 ]]; then
+  open -a "$APP_NAME"
+  exit 0
+fi
+
+open -a "$APP_NAME" -- "${targets[@]}"

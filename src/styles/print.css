@@ -1,0 +1,103 @@
+/* QvReader Clean Document Print & PDF Export Stylesheet */
+@media print {
+  /* Hide all application chrome, navigation, toolbars, and overlays */
+  header,
+  footer,
+  aside,
+  nav,
+  .qv-status-bar,
+  .qv-outline-drawer,
+  .qv-workspace-drawer,
+  .qv-context-menu,
+  .qv-drop-overlay,
+  .fixed,
+  button {
+    display: none !important;
+  }
+
+  /* Reset layout constraints for natural document flow */
+  html,
+  body,
+  #root,
+  .h-screen,
+  .h-full,
+  .overflow-hidden,
+  .overflow-auto,
+  .overflow-y-auto {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  /* Page margins and layout */
+  @page {
+    margin: 15mm 20mm;
+    size: auto;
+  }
+
+  /* Target main markdown content container */
+  .qv-markdown {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+    color: #111827 !important;
+  }
+
+  /* Headings: prevent orphan headings at the bottom of a page */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    color: #111827 !important;
+  }
+
+  /* Code blocks, tables, and Mermaid diagrams: avoid splitting across pages */
+  pre,
+  table,
+  blockquote,
+  .qv-mermaid-wrapper,
+  img {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Syntax highlighted code: clean light background, exact print colors and word wrap */
+  pre,
+  pre.hljs,
+  .qv-markdown pre,
+  .qv-markdown pre.hljs {
+    content-visibility: visible !important;
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+  }
+
+  pre code,
+  pre.hljs code,
+  .qv-markdown pre code {
+    color: #0f172a !important;
+    background: transparent !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+
+  /* Links: show clear text without URL pollution unless needed */
+  a {
+    color: #2563eb !important;
+    text-decoration: underline !important;
+  }
+
+  /* Ensure Mermaid diagrams are scaled cleanly to printable width */
+  .qv-mermaid-wrapper svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
