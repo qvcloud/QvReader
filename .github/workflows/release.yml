@@ -1,0 +1,198 @@
+name: Official Release Pipeline
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+permissions:
+  contents: read
+
+jobs:
+  # ----------------------------------------------------------------------------
+  # Job 1: Release Preflight & Version Consistency Checks
+  # ----------------------------------------------------------------------------
+  preflight:
+    name: Preflight & Version Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Tag
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Verify Version Consistency
+        run: |
+          node scripts/verify-version.mjs --tag "${{ github.ref_name }}"
+
+      - name: Verify Tag Ancestry on Main
+        run: |
+          git fetch origin main:main
+          if ! git merge-base --is-ancestor HEAD main; then
+            echo "❌ Error: Tag commit is not reachable from protected main branch!"
+            exit 1
+          fi
+          echo "✅ Tag commit is an ancestor of main."
+
+  # ----------------------------------------------------------------------------
+  # Job 2: Multi-Platform Build Matrix (macOS, Windows, Linux)
+  # ----------------------------------------------------------------------------
+  build-matrix:
+    name: Build (${{ matrix.platform }})
+    needs: preflight
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - platform: macos
+            os: macos-13
+          - platform: windows
+            os: windows-latest
+          - platform: linux
+            os: ubuntu-22.04
+
+    steps:
+      - name: Checkout Source at Exact Tag Commit
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux Build Dependencies
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf libssl-dev libsecret-1-dev
+
+      - name: Install NPM Dependencies
+        run: npm ci
+
+      - name: Build Webview Bundle
+        run: npm run build
+
+      - name: Run Hermetic Unit Tests
+        run: |
+          npm test
+          cargo test --manifest-path src-tauri/Cargo.toml --locked
+
+      - name: Build Desktop Application Package
+        run: npm run tauri -- build --no-bundle false
+
+      - name: Stage Artifacts
+        shell: bash
+        run: |
+          mkdir -p dist-artifacts
+          if [ "${{ matrix.platform }}" = "macos" ]; then
+            find src-tauri/target/release/bundle/dmg -name "*.dmg" -exec cp {} dist-artifacts/ \;
+          elif [ "${{ matrix.platform }}" = "windows" ]; then
+            find src-tauri/target/release/bundle/nsis -name "*.exe" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+            find src-tauri/target/release/bundle/msi -name "*.msi" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+          elif [ "${{ matrix.platform }}" = "linux" ]; then
+            find src-tauri/target/release/bundle/appimage -name "*.AppImage" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+            find src-tauri/target/release/bundle/deb -name "*.deb" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+          fi
+          ls -la dist-artifacts/
+
+      - name: Upload Platform Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts-${{ matrix.platform }}
+          path: dist-artifacts/*
+          if-no-files-found: error
+
+  # ----------------------------------------------------------------------------
+  # Job 3: Evidence Generation (Checksums, SBOMs, Provenance Manifest)
+  # ----------------------------------------------------------------------------
+  generate-evidence:
+    name: Generate Release Evidence & SBOMs
+    needs: build-matrix
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+          merge-multiple: true
+
+      - name: Verify Full-Matrix Completeness & Generate Evidence
+        run: |
+          mkdir -p release-evidence
+          cp all-artifacts/* release-evidence/
+          
+          # Extract pure semver (strip leading 'v')
+          VERSION="${GITHUB_REF_NAME#v}"
+          
+          node scripts/generate-release-evidence.mjs \
+            --artifacts-dir ./release-evidence \
+            --version "$VERSION" \
+            --tag "$GITHUB_REF_NAME" \
+            --commit "$GITHUB_SHA" \
+            --workflow-run "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --output ./release-evidence/release-provenance.json
+
+      - name: Test Release Provenance Manifest
+        run: |
+          node tests/contracts/release-provenance.test.mjs
+
+      - name: Upload Final Release Assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-release-payload
+          path: release-evidence/*
+
+  # ----------------------------------------------------------------------------
+  # Job 4: Protected Signing & Publication (Protected 'release' environment)
+  # ----------------------------------------------------------------------------
+  publish:
+    name: Protected Sign & Publish Release
+    needs: generate-evidence
+    runs-on: ubuntu-latest
+    environment: release
+    if: github.repository == 'qvcloud/QvReader'
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Download Final Payload
+        uses: actions/download-artifact@v4
+        with:
+          name: final-release-payload
+          path: dist-final
+
+      - name: Verify Evidence Completeness Before Publishing
+        run: |
+          ls -la dist-final/
+          test -f dist-final/release-provenance.json
+          test -f dist-final/SHA256SUMS.txt
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
+        with:
+          files: dist-final/*
+          tag_name: ${{ github.ref_name }}
+          name: QvReader ${{ github.ref_name }}
+          generate_release_notes: true
+          make_latest: true
+          prerelease: false
