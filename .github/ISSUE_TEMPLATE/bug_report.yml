@@ -1,0 +1,90 @@
+name: "Bug Report"
+description: "File a bug report to help us improve QvReader"
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please verify this is not a security vulnerability.
+        For vulnerabilities, report privately via [Security Advisories](https://github.com/qvcloud/QvReader/security/advisories).
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Operating System
+      description: What platform are you running QvReader on?
+      options:
+        - macOS (Apple Silicon M-series)
+        - macOS (Intel x86_64)
+        - Windows 11 (x86_64)
+        - Windows 10 (x86_64)
+        - Linux (Ubuntu/Debian)
+        - Linux (Fedora/RHEL/Arch)
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: QvReader Version
+      description: Version of QvReader (see About dialog or Help > About)
+      placeholder: "e.g. 0.1.4"
+    validations:
+      required: true
+  - type: dropdown
+    id: build_source
+    attributes:
+      label: Build Source
+      description: Where did you get this build of QvReader?
+      options:
+        - Official GitHub Release / DMG / MSI / AppImage
+        - Self-built from source (Community Build)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reproduce the behavior.
+      placeholder: |
+        1. Open QvReader with file '...'
+        2. Press 'F2' to enter inline edit mode
+        3. Type '...' and press 'Ctrl+S'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs. Actual Behavior
+      description: What did you expect to happen, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: sample_markdown
+    attributes:
+      label: Sample Markdown Fixture
+      description: If applicable, paste a minimal sample Markdown snippet that reproduces the issue.
+      render: markdown
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs or Error Output
+      description: Paste any error messages from the console. Please redact any personal paths or sensitive info!
+      render: shell
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Security & Preflight Checks
+      options:
+        - label: I confirm this report does not contain sensitive personal data, license keys, or security vulnerabilities.
+          required: true
+        - label: I have searched existing issues to ensure this is not a duplicate.
+          required: true

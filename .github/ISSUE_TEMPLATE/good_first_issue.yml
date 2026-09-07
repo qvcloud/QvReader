@@ -1,0 +1,44 @@
+name: "Good First Issue / Newcomer Task"
+description: "Template for maintainers creating beginner-friendly contributor issues"
+title: "[Good First Issue]: "
+labels: ["good first issue", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to define a scoped task suitable for newcomers.
+        See [First Contribution Guide](docs/contributing/first-contribution.md) for contributor onboarding instructions.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Task Summary
+      description: Concise description of what needs to be added, fixed, or documented.
+    validations:
+      required: true
+  - type: textarea
+    id: files_involved
+    attributes:
+      label: Relevant Files / Components
+      description: Mention the specific files, modules, or tests involved (e.g., `src/components/Toolbar.tsx`).
+      placeholder: |
+        - `src/components/...`
+        - `tests/...`
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Outcome
+      description: What should happen after this task is completed?
+    validations:
+      required: true
+  - type: textarea
+    id: verification_steps
+    attributes:
+      label: How to Test / Verify
+      description: Instructions for the contributor to test their change locally.
+      placeholder: |
+        1. Run `npm test`
+        2. Run `npm run tauri -- dev` and verify ...
+    validations:
+      required: true

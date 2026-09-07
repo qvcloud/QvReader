@@ -1,0 +1,22 @@
+# Code Owners for QvReader
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default fallback for everything in this repository
+* @qvcloud/maintainers
+
+# Frontend application code
+/src/ @qvcloud/frontend-maintainers @qvcloud/maintainers
+/tests/ @qvcloud/frontend-maintainers @qvcloud/maintainers
+
+# Native Rust application and Tauri integration
+/src-tauri/ @qvcloud/native-maintainers @qvcloud/maintainers
+
+# GitHub workflows and CI configuration
+/.github/ @qvcloud/core-team @qvcloud/maintainers
+
+# Documentation, translations, and guides
+/docs/ @qvcloud/docs-maintainers @qvcloud/maintainers
+/*.md @qvcloud/docs-maintainers @qvcloud/maintainers
+
+# Build scripts
+/scripts/ @qvcloud/core-team @qvcloud/maintainers

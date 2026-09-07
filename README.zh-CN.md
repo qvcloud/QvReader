@@ -109,17 +109,25 @@ QvReader 秉承透明、本地优先的商业化模式：
 
 ---
 
-## 深入文档
+## 深入文档与社区治理
 
+- [系统架构与模块设计](docs/architecture.md)
 - [功能特性深入详解](docs/zh-CN/features.md)
 - [日常使用与快捷键手册](docs/zh-CN/usage.md)
 - [项目路线图与规划](docs/zh-CN/roadmap.md)
 - [本地源码编译与开发指引](docs/zh-CN/development.md)
+- [贡献者指南](CONTRIBUTING.md)
+- [新手首次贡献指引](docs/contributing/first-contribution.md)
+- [社区行为准则](CODE_OF_CONDUCT.md)
+- [安全报告策略](SECURITY.md)
+- [项目治理结构](GOVERNANCE.md)
+- [支持与帮助策略](SUPPORT.md)
 - [版本发布流程](docs/zh-CN/release-process.md)
 - [版本更新日志](CHANGELOG.md)
 
 ---
 
-## 开源许可证
+## 许可证与商标政策
 
-本项目基于 [Apache License 2.0](LICENSE) 协议分发。
+- **源码许可证**：本项目遵循 [Apache License 2.0](LICENSE) 许可协议分发。详见 [NOTICE](NOTICE) 与 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+- **商标与品牌**：“QvReader” 名称、品牌标识及官方签名发布包受独立商标政策保护，详见 [TRADEMARKS.md](TRADEMARKS.md)。

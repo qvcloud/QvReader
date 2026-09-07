@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Vulnerability Reporting
+    url: https://github.com/qvcloud/QvReader/security/advisories/new
+    about: Please report security vulnerabilities privately via GitHub Security Advisories or security@qvreader.com.
+  - name: Community Discussions & Questions
+    url: https://github.com/qvcloud/QvReader/discussions
+    about: Ask questions, share ideas, and discuss workflows with fellow users and maintainers.

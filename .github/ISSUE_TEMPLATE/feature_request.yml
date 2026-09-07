@@ -1,0 +1,49 @@
+name: "Feature Request"
+description: "Suggest an idea or enhancement for QvReader"
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please consult the [Roadmap](docs/roadmap.md) and [Architecture Guide](docs/architecture.md) before submitting.
+        QvReader strictly prioritizes lightness, <50ms startup, source byte fidelity, and local-first offline reading.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your feature request related to a problem or limitation? Please describe.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you would like to see implemented.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you have considered.
+  - type: dropdown
+    id: impact_on_principles
+    attributes:
+      label: Tenet Alignment
+      description: How does this feature impact startup speed and bundle size?
+      options:
+        - Pure local improvement, zero impact on bundle size / startup speed
+        - Minimal addition with proven lazy-loaded / optional path
+        - Unsure / Needs benchmark
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-flight Checklist
+      options:
+        - label: I have reviewed the Roadmap to check if this feature is already planned or intentionally excluded.
+          required: true
+        - label: I understand that QvReader does not accept heavy cloud/subscription sync features.
+          required: true

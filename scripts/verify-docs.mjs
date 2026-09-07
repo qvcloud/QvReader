@@ -216,6 +216,62 @@ function verifyRelativeLinks() {
   }
 }
 
+// 5. Verify Community & Governance Documentation
+function verifyCommunityDocs() {
+  console.log('\n--- Checking Community & Governance Documents ---');
+  const requiredFiles = [
+    { relPath: 'CONTRIBUTING.md', mustInclude: ['Apache License, Version 2.0', 'Inbound = Outbound', 'CODE_OF_CONDUCT.md'] },
+    { relPath: 'CODE_OF_CONDUCT.md', mustInclude: ['Contributor Covenant', 'conduct@qvreader.com'] },
+    { relPath: 'SECURITY.md', mustInclude: ['Supported Versions', 'security@qvreader.com', '48 hours'] },
+    { relPath: '.github/SECURITY.md', mustInclude: ['SECURITY.md'] },
+    { relPath: 'GOVERNANCE.md', mustInclude: ['Roles & Responsibilities', 'Maintainers', 'Core Team'] },
+    { relPath: 'SUPPORT.md', mustInclude: ['Discussions', 'Issues', 'support@qvreader.com'] },
+    { relPath: 'LICENSE', mustInclude: ['Apache License', 'Version 2.0'] },
+    { relPath: 'NOTICE', mustInclude: ['QvReader', 'Copyright', 'Apache License, Version 2.0'] },
+    { relPath: 'TRADEMARKS.md', mustInclude: ['Community Build', '非官方构建', 'Apache-2.0'] },
+    { relPath: 'THIRD_PARTY_NOTICES.md', mustInclude: ['@codemirror', 'KaTeX', 'Mermaid', 'Tauri'] },
+    { relPath: 'docs/architecture.md', mustInclude: ['Detailed Module Map', 'Public vs. Private Boundaries', 'IPC Contract'] },
+    { relPath: 'docs/contributor-validation.md', mustInclude: ['External Contributor Validation', 'Setup Discovery', 'Local Quality Checks'] },
+    { relPath: 'docs/contributing/first-contribution.md', mustInclude: ['Good First Issue', 'First Contribution Guide', 'Contributors Hall of Fame'] },
+    { relPath: '.github/ISSUE_TEMPLATE/config.yml', mustInclude: ['blank_issues_enabled: false', 'security/advisories'] },
+    { relPath: '.github/ISSUE_TEMPLATE/bug_report.yml', mustInclude: ['name: "Bug Report"', 'platform', 'version'] },
+    { relPath: '.github/ISSUE_TEMPLATE/feature_request.yml', mustInclude: ['name: "Feature Request"', 'Tenet Alignment'] },
+    { relPath: '.github/ISSUE_TEMPLATE/good_first_issue.yml', mustInclude: ['name: "Good First Issue', 'first-contribution.md'] },
+    { relPath: '.github/pull_request_template.md', mustInclude: ['Constitutional Tenet Checks', 'Markdown Fidelity', 'Inbound = Outbound'] },
+    { relPath: '.github/CODEOWNERS', mustInclude: ['@qvcloud/maintainers'] },
+    { relPath: '.github/dependabot.yml', mustInclude: ['package-ecosystem: "npm"', 'package-ecosystem: "cargo"', 'package-ecosystem: "github-actions"'] },
+  ];
+
+  for (const item of requiredFiles) {
+    const filePath = path.join(RELEASE_ROOT, item.relPath);
+    if (!fs.existsSync(filePath)) {
+      logFail(`Missing required community file: ${item.relPath}`);
+      continue;
+    }
+    checkedFiles++;
+    const content = fs.readFileSync(filePath, 'utf-8');
+    for (const phrase of item.mustInclude) {
+      if (!content.includes(phrase)) {
+        logFail(`[${item.relPath}] Missing expected content phrase: "${phrase}"`);
+      }
+    }
+    logPass(`[${item.relPath}] Verified`);
+  }
+
+  // Verify that root README links to community docs
+  const readmePath = path.join(RELEASE_ROOT, 'README.md');
+  if (fs.existsSync(readmePath)) {
+    const readmeContent = fs.readFileSync(readmePath, 'utf-8');
+    const requiredLinks = ['CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md', 'GOVERNANCE.md', 'SUPPORT.md', 'LICENSE', 'TRADEMARKS.md'];
+    for (const link of requiredLinks) {
+      if (!readmeContent.includes(link)) {
+        logFail(`[README.md] Missing link to ${link}`);
+      }
+    }
+    logPass('[README.md] Verified links to all community governance docs');
+  }
+}
+
 // Execute selected scope
 console.log(`Starting documentation verification (scope: ${scope})...`);
 
@@ -227,6 +283,9 @@ if (scope === 'all' || scope === 'deep-dive') {
 }
 if (scope === 'all' || scope === 'roadmap-changelog') {
   verifyRoadmapAndChangelog();
+}
+if (scope === 'all' || scope === 'community') {
+  verifyCommunityDocs();
 }
 if (scope === 'all') {
   verifyRelativeLinks();

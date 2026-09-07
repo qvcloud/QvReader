@@ -37,4 +37,10 @@ To protect QvReader's core mission of being fast, lightweight, and focused, the 
 - Silent file association takeovers.
 - Intrusive advertisements or visually noisy badges during reading.
 
+## Community Participation & Claiming Tasks
+
+- **Browse Good First Issues**: If you are looking for an accessible entry point to help with upcoming features, browse issues labeled [`good first issue`](https://github.com/qvcloud/QvReader/labels/good%20first%20issue).
+- **Proposing Roadmap Additions**: Open a discussion on the [Feature Request Tracker](https://github.com/qvcloud/QvReader/issues/new?template=feature_request.yml) describing how the idea aligns with our offline-first and fast-startup principles.
+- **Onboarding Guide**: For guidance on development, local tests, and PR submission, see the [First Contribution Guide](contributing/first-contribution.md).
+
 Feature discussions happen openly on the [GitHub Issues Tracker](https://github.com/qvcloud/QvReader/issues).
