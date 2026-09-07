@@ -48,9 +48,21 @@ for file in "${REQUIRED_ROOT_FILES[@]}"; do
 done
 
 # 2. Rejection of forbidden build outputs, caches, or secrets
-FORBIDDEN_PATTERNS=(
+FORBIDDEN_TRACKED_PATTERNS=(
   "dist"
   "src-tauri/target"
+  "target"
+  "node_modules"
+)
+
+for pat in "${FORBIDDEN_TRACKED_PATTERNS[@]}"; do
+  tracked=$(git ls-files "$pat" 2>/dev/null || true)
+  if [ -n "$tracked" ]; then
+    log_err "Forbidden build output tracked in git index: $pat"
+  fi
+done
+
+FORBIDDEN_SECRET_PATTERNS=(
   ".env"
   ".env.local"
   ".env.production"
@@ -58,11 +70,11 @@ FORBIDDEN_PATTERNS=(
   "*.key"
 )
 
-for pat in "${FORBIDDEN_PATTERNS[@]}"; do
+for pat in "${FORBIDDEN_SECRET_PATTERNS[@]}"; do
   matches=$(find . -maxdepth 3 -name "$pat" ! -path "./.git/*" ! -path "./node_modules/*" 2>/dev/null || true)
   if [ -n "$matches" ]; then
     while IFS= read -r m; do
-      log_err "Forbidden build output or secret file detected in public tree: $m"
+      log_err "Forbidden secret file detected in public tree: $m"
     done <<< "$matches"
   fi
 done
