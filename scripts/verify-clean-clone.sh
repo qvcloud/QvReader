@@ -39,11 +39,11 @@ echo "--- Step 2/5: Installing dependencies via npm ci ---"
 npm ci --ignore-scripts
 
 # 4. Run sequential tests and builds
-echo "--- Step 3/5: Running test suite ---"
-npm test -- --run
-
-echo "--- Step 4/5: Building frontend dist ---"
+echo "--- Step 3/5: Building frontend dist ---"
 npm run build
+
+echo "--- Step 4/5: Running test suite ---"
+npm test -- --run
 
 echo "--- Step 5/5: Running native locked tests ---"
 cargo test --manifest-path src-tauri/Cargo.toml --locked
