@@ -2,6 +2,10 @@
 
 All notable changes are tracked here. Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+> **Note on Versioning & Source Publication**:
+> Releases prior to `v0.2.0` (`v0.1.0` ~ `v0.1.5`) are historical releases built before open-sourcing (`pre-source-publication`). Their tags remain immutable.
+> Starting with version `v0.2.0`, all releases are 100% source-backed and verifiable from public commits on `qvcloud/QvReader`.
+
 ## [0.1.5] - 2026-09-06
 
 ### Added
