@@ -23,12 +23,12 @@ jobs:
         os: [ macos-14, ubuntu-22.04, windows-2022 ]
     steps:
       - name: Checkout Public Source
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
       - name: Setup Node.js 20
-        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
@@ -46,7 +46,7 @@ jobs:
           components: rustfmt, clippy
 
       - name: Cache Cargo Dependencies
-        uses: actions/cache@13aacd865c20de90d75de166421e5ddf2f111e38 # v4.0.0
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/bin/
