@@ -4,13 +4,23 @@ import path from 'path';
 import { loadKatex } from '../../src/lib/mathRenderer';
 
 describe('Client Distribution Bundle Size Budget', () => {
+  const distDir = path.resolve(__dirname, '../../dist');
+  const assetsDir = path.resolve(distDir, 'assets');
+
   beforeAll(async () => {
     await loadKatex();
     const { renderMarkdown } = await import('../../src/lib/markdown');
     renderMarkdown('# Warmup');
+
+    if (!fs.existsSync(distDir) || !fs.existsSync(assetsDir)) {
+      const { execSync } = await import('child_process');
+      execSync('npm run build', {
+        cwd: path.resolve(__dirname, '../../'),
+        stdio: 'inherit',
+        env: { ...process.env, NODE_ENV: 'production' }
+      });
+    }
   });
-  const distDir = path.resolve(__dirname, '../../dist');
-  const assetsDir = path.resolve(distDir, 'assets');
 
   it('enforces that production dist directory exists', () => {
     expect(fs.existsSync(distDir)).toBe(true);

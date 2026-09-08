@@ -67,11 +67,11 @@ jobs:
       - name: Install Node Dependencies
         run: npm ci
 
-      - name: Run Frontend Tests
-        run: npm run test
-
       - name: Build Frontend Application
         run: npm run build
+
+      - name: Run Frontend Tests
+        run: npm run test
 
       - name: Run Native Rust Unit and Contract Tests
         run: cargo test --manifest-path src-tauri/Cargo.toml --locked
