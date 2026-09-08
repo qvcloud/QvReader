@@ -73,7 +73,23 @@ if (!fs.existsSync(cargoTomlPath)) {
   }
 }
 
-// 3. src-tauri/tauri.conf.json
+// 3. src-tauri/Cargo.lock (package version must match so `cargo test --locked` passes)
+const cargoLockPath = path.join(REPO_ROOT, 'src-tauri/Cargo.lock');
+if (!fs.existsSync(cargoLockPath)) {
+  logFail(`Missing src-tauri/Cargo.lock at ${cargoLockPath}`);
+} else {
+  const cargoLockContent = fs.readFileSync(cargoLockPath, 'utf-8');
+  const pkgMatch = cargoLockContent.match(/name = "qvreader"[\s\S]*?version = "([^"]+)"/);
+  if (!pkgMatch) {
+    logFail('Failed to extract qvreader version from src-tauri/Cargo.lock');
+  } else if (pkgMatch[1] !== baseVersion) {
+    logFail(`Cargo.lock qvreader version (${pkgMatch[1]}) does not match package.json (${baseVersion})`);
+  } else {
+    logPass(`src-tauri/Cargo.lock qvreader version matches: ${pkgMatch[1]}`);
+  }
+}
+
+// 4. src-tauri/tauri.conf.json
 const tauriConfPath = path.join(REPO_ROOT, 'src-tauri/tauri.conf.json');
 if (!fs.existsSync(tauriConfPath)) {
   logFail(`Missing src-tauri/tauri.conf.json at ${tauriConfPath}`);
@@ -86,7 +102,7 @@ if (!fs.existsSync(tauriConfPath)) {
   }
 }
 
-// 4. src/config/version.ts
+// 5. src/config/version.ts
 const versionTsPath = path.join(REPO_ROOT, 'src/config/version.ts');
 if (fs.existsSync(versionTsPath)) {
   const versionTsContent = fs.readFileSync(versionTsPath, 'utf-8');
@@ -100,7 +116,7 @@ if (fs.existsSync(versionTsPath)) {
   }
 }
 
-// 5. CHANGELOG.md
+// 6. CHANGELOG.md
 const changelogPath = path.join(REPO_ROOT, 'CHANGELOG.md');
 if (!fs.existsSync(changelogPath)) {
   logFail(`Missing CHANGELOG.md at ${changelogPath}`);
@@ -114,7 +130,7 @@ if (!fs.existsSync(changelogPath)) {
   }
 }
 
-// 6. Optional Tag check
+// 7. Optional Tag check
 if (expectedTag) {
   const normalizedTag = expectedTag.startsWith('v') ? expectedTag : `v${expectedTag}`;
   const targetTag = `v${baseVersion}`;
@@ -125,7 +141,7 @@ if (expectedTag) {
   }
 }
 
-// 7. Optional Provenance check
+// 8. Optional Provenance check
 if (provenancePath) {
   if (!fs.existsSync(provenancePath)) {
     logFail(`Specified provenance file does not exist: ${provenancePath}`);

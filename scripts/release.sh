@@ -78,6 +78,11 @@ if [ "$DRY_RUN" != "1" ]; then
   # src-tauri/Cargo.toml
   perl -0pi -e 's/(\[package\][\s\S]*?version\s*=\s*)"[^"]+"/${1}"'"$VER"'"/' src-tauri/Cargo.toml
 
+  # src-tauri/Cargo.lock (keep in sync so `cargo test --locked` passes)
+  if [ -f "src-tauri/Cargo.lock" ]; then
+    perl -0pi -e 's/(name = "qvreader"\nversion = ")[^"]+"/${1}'"$VER"'"/' src-tauri/Cargo.lock
+  fi
+
   # src-tauri/tauri.conf.json
   perl -0pi -e 's/("version":\s*)"[^"]+"/${1}"'"$VER"'"/' src-tauri/tauri.conf.json
   perl -0pi -e 's/("title":\s*"QvReader\s+)[^"]*("\s*,)/${1}v'"$VER"'$2/' src-tauri/tauri.conf.json
@@ -86,9 +91,9 @@ if [ "$DRY_RUN" != "1" ]; then
   if [ -f "src/config/version.ts" ]; then
     perl -0pi -e 's/(CLIENT_VERSION\s*=\s*)[^;]+;/${1}'"'$VER'"';/' src/config/version.ts
   fi
-  echo "✔ Updated package.json, Cargo.toml, tauri.conf.json, and src/config/version.ts."
+  echo "✔ Updated package.json, Cargo.toml, Cargo.lock, tauri.conf.json, and src/config/version.ts."
 else
-  echo "✔ [dry-run] Would bump version to $VER in package.json, Cargo.toml, tauri.conf.json, and version.ts."
+  echo "✔ [dry-run] Would bump version to $VER in package.json, Cargo.toml, Cargo.lock, tauri.conf.json, and version.ts."
 fi
 
 # 5. Changelog validation & update
