@@ -89,22 +89,27 @@ If Windows displays a blue modal stating: *"Windows protected your PC"*:
 | **Export to Standalone HTML** | `Cmd + Shift + H` | `Ctrl + Shift + H` | Self-contained offline HTML file bundle |
 | **Settings Center** | `Cmd + ,` | `Ctrl + ,` | Themes, layout modes (adaptive/standard/full), and font adjustments |
 
----
-
-## Editions & Commercial Boundaries
+## Editions, Privacy & Commercial Boundaries
 
 QvReader adheres to a transparent, local-first commercial model:
 
-- **Community Edition (Free Forever)**:
-  - Full core reading experience 100% free with no time limits or ads.
-  - `F2` inline editing 100% free with zero paywalls.
-  - `F3` split-view editing includes 300 free trial evaluation sessions.
-  - **Never hard-locked upon trial exhaustion**: You can continue using F3 mode freely (a gentle purchase reminder appears when opening new files), and **document saving is never blocked**.
-- **Pro Edition ($9.99 One-Time Lifetime Buyout)**:
-  - One-time purchase with lifetime updates and zero recurring subscriptions.
-  - Supports **3+ personal devices** across macOS and Windows.
-  - **100% local offline activation** with complete removal of all Pro prompts.
-  - 14-day refund guarantee via [qvreader.com](https://qvreader.com).
+- **100% Open-Source Client**:
+  - The complete desktop client source code (React UI, markdown parser, Tauri Rust core, offline entitlement verifier) is available under the [Apache License 2.0](LICENSE).
+  - Build directly from source using `npm ci && npm run build` without proprietary dependencies.
+  - In local development (`NODE_ENV !== 'production'`), Pro features are unlocked by default so contributors can test freely.
+- **Redistribution & Trademark Rules**:
+  - You are free to fork, modify, and redistribute under Apache-2.0.
+  - Forks and unofficial builds MUST identify as a **"Community Build"** or **"非官方构建"** in the window title and About dialog per [TRADEMARKS.md](TRADEMARKS.md).
+  - Official code signing certificates (Apple notarization, Windows Authenticode) are reserved exclusively for official maintainer distributions.
+- **Privacy & Local-First Guarantees**:
+  - QvReader operates completely offline. Document contents and file paths are **never** transmitted to remote servers.
+  - Pro activation transmits only an anonymized device hash, device label, and license key over TLS.
+  - License validation failures never lock, modify, or block saving local Markdown files.
+- **Community vs. Pro Editions (Official Distributions)**:
+  - **Community Edition**: Core reading and `F2` inline editing are 100% free with no time limits or ads. `F3` split-view includes evaluation trial sessions with zero lockouts on document saving.
+  - **Pro Edition ($9.99 One-Time Lifetime Buyout)**: One-time buyout for 3+ devices, 100% local offline activation, zero subscriptions via [qvreader.com](https://qvreader.com).
+- **Support Scope**:
+  - Technical support from maintainers is provided for official distributions per [SUPPORT.md](SUPPORT.md). Forks are supported by their respective creators.
 
 ---
 

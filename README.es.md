@@ -108,17 +108,23 @@ QvReader mantiene un modelo comercial transparente y local-first:
 
 ---
 
-## Documentación
+## Documentación y Comunidad
 
 - [Guía Detallada de Funciones](docs/es/features.md)
 - [Manual de Uso y Atajos](docs/es/usage.md)
 - [Hoja de Ruta y Planes Futuros](docs/es/roadmap.md)
 - [Compilación desde el Código Fuente](docs/es/development.md)
+- [Guía de Contribución (en inglés)](CONTRIBUTING.md)
+- [Código de Conducta (en inglés)](CODE_OF_CONDUCT.md)
+- [Política de Seguridad (en inglés)](SECURITY.md)
+- [Gobernanza (en inglés)](GOVERNANCE.md)
+- [Política de Soporte (en inglés)](SUPPORT.md)
 - [Proceso de Lanzamiento](docs/es/release-process.md)
 - [Registro de Cambios](CHANGELOG.md)
 
 ---
 
-## Licencia
+## Licencia y Marcas Registradas
 
-Distribuido bajo la [Licencia Apache 2.0](LICENSE).
+- **Código Fuente**: Distribuido bajo la [Licencia Apache 2.0](LICENSE). Consulte [NOTICE](NOTICE) y [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+- **Marcas Registradas**: El nombre "QvReader" y los logotipos oficiales se rigen por [TRADEMARKS.md](TRADEMARKS.md). Las compilaciones de terceros deben identificarse como "Community Build".

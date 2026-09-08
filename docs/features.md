@@ -65,4 +65,13 @@ To protect QvReader's core mission of being fast, lightweight, and focused, the 
 - Heavy IDE features or bloated knowledge-graph databases.
 - Intrusive popups, aggressive upsell dialogs, or visual badges during reading.
 
+---
+
+## Privacy, Offline Behavior & Commercial Boundaries
+
+- **Local-First & Offline Privacy**: Document contents, file names, and local folder paths are processed strictly in-memory and on disk locally. Nothing is ever sent to cloud servers.
+- **Activation Privacy & Device Minimization**: Pro activation communicates with an issuer endpoint over TLS transmitting only the license key, a one-way anonymized SHA-256 device identifier hash, and client version. No personal emails, passwords, or documents are included.
+- **Safe Offline Verification**: Once activated, the client verifies the asymmetric Ed25519 signature entirely offline. If offline verification fails, core reading, editing, and saving never block.
+- **Commercial & Support Boundaries**: Official paid entitlements grant access to official updates, official customer support, and official code-signed distributions. Third-party forks are governed by Apache-2.0 and supported by their respective authors per [SUPPORT.md](../SUPPORT.md).
+
 See [roadmap.md](roadmap.md) for planned and completed milestones.

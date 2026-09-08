@@ -133,7 +133,7 @@ When producing standalone non-official builds:
 # Build Community Edition Desktop Binary:
 make build-community
 ```
-Community builds compiled from source will show **"Community Build"** in the window title and About dialog. Official maintainer releases are built through secure CI release workflows.
+Community builds compiled from source will show **"Community Build"** in the window title and About dialog per [TRADEMARKS.md](../TRADEMARKS.md). Official maintainer releases are built through secure CI release workflows. Technical support for third-party forks is provided by their authors per [SUPPORT.md](../SUPPORT.md).
 
 ---
 

@@ -108,17 +108,23 @@ QvReader는 투명하고 로컬 우선의 정책을 준수합니다:
 
 ---
 
-## 상세 문서
+## 상세 문서 및 커뮤니티
 
 - [상세 기능 가이드](docs/ko/features.md)
 - [사용 가이드 및 단축키](docs/ko/usage.md)
 - [로드맵 및 개발 계획](docs/ko/roadmap.md)
 - [소스 빌드 및 개발 가이드](docs/ko/development.md)
+- [기여 가이드 (영어)](CONTRIBUTING.md)
+- [행동 강령 (영어)](CODE_OF_CONDUCT.md)
+- [보안 정책 (영어)](SECURITY.md)
+- [거버넌스 (영어)](GOVERNANCE.md)
+- [지원 정책 (영어)](SUPPORT.md)
 - [릴리스 프로세스](docs/ko/release-process.md)
 - [변경 내역](CHANGELOG.md)
 
 ---
 
-## 라이선스
+## 라이선스 및 상표
 
-본 프로젝트는 [Apache License 2.0](LICENSE)에 따라 배포됩니다.
+- **소스 코드**: [Apache License 2.0](LICENSE)에 따라 배포됩니다. 자세한 내용은 [NOTICE](NOTICE) 및 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)를 참조하세요.
+- **상표**: "QvReader" 명칭 및 공식 로고는 [TRADEMARKS.md](TRADEMARKS.md)의 보호를 받습니다. 비공식 커뮤니티 빌드는 "Community Build"로 표시되어야 합니다.

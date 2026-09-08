@@ -108,17 +108,23 @@ QvReader は透明でローカルファーストなビジネスモデルを採�
 
 ---
 
-## ドキュメント
+## ドキュメントとコミュニティ
 
 - [詳細機能ガイド](docs/ja/features.md)
 - [使用方法とショートカット](docs/ja/usage.md)
 - [ロードマップ](docs/ja/roadmap.md)
 - [ソースからのビルド](docs/ja/development.md)
+- [貢献者ガイド (英語)](CONTRIBUTING.md)
+- [行動規範 (英語)](CODE_OF_CONDUCT.md)
+- [セキュリティポリシー (英語)](SECURITY.md)
+- [ガバナンス (英語)](GOVERNANCE.md)
+- [サポートポリシー (英語)](SUPPORT.md)
 - [リリースプロセス](docs/ja/release-process.md)
 - [更新履歴](CHANGELOG.md)
 
 ---
 
-## ライセンス
+## ライセンスと商標
 
-[Apache License 2.0](LICENSE) に基づいて配布されています。
+- **ソースコード**: [Apache License 2.0](LICENSE) に基づいて配布されています。詳細は [NOTICE](NOTICE) および [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) をご覧ください。
+- **商標**: 「QvReader」の名称および公式ロゴ・配布物は [TRADEMARKS.md](TRADEMARKS.md) に規定されています。非公式ビルドは「Community Build」と表示する必要があります。

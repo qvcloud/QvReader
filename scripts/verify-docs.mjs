@@ -272,6 +272,83 @@ function verifyCommunityDocs() {
   }
 }
 
+// 6. Verify Open-Source & Commercial Boundary Assertions (User Story 4)
+function verifyBoundaryAssertions() {
+  console.log('\n--- Checking Open-Source, Trademark & Commercial Boundaries ---');
+
+  // Assertions for README.md
+  const readmePath = path.join(RELEASE_ROOT, 'README.md');
+  if (fs.existsSync(readmePath)) {
+    checkedFiles++;
+    const content = fs.readFileSync(readmePath, 'utf-8');
+    const assertions = [
+      { term: 'Apache License 2.0', label: 'Apache license rights' },
+      { term: 'Community Build', label: 'Fork community build identifier' },
+      { term: 'code signing certificates', label: 'Official build signing identity' },
+      { term: 'offline', label: 'Offline operation guarantee' },
+      { term: 'anonymized device hash', label: 'Privacy & device data minimization' },
+      { term: 'Pro Edition', label: 'Commercial Pro edition scope' },
+      { term: 'SUPPORT.md', label: 'Support boundaries link' },
+    ];
+    for (const a of assertions) {
+      if (!content.includes(a.term)) {
+        logFail(`[README.md] Missing required boundary assertion: ${a.label} ("${a.term}")`);
+      }
+    }
+    logPass('[README.md] Verified boundary and privacy assertions');
+  }
+
+  // Assertions for README.zh-CN.md
+  const zhReadmePath = path.join(RELEASE_ROOT, 'README.zh-CN.md');
+  if (fs.existsSync(zhReadmePath)) {
+    checkedFiles++;
+    const content = fs.readFileSync(zhReadmePath, 'utf-8');
+    const assertions = [
+      { term: 'Apache License 2.0', label: 'Apache 许可协议声明' },
+      { term: '非官方构建', label: '非官方构建标识声明' },
+      { term: '数字代码签名', label: '官方数字签名隔离声明' },
+      { term: '离线', label: '完全离线可用保证' },
+      { term: '匿名硬件哈希', label: '隐私与设备数据最小化声明' },
+      { term: '专业版', label: '商业专业版范围声明' },
+      { term: 'SUPPORT.md', label: '技术支持边界链接' },
+    ];
+    for (const a of assertions) {
+      if (!content.includes(a.term)) {
+        logFail(`[README.zh-CN.md] Missing required boundary assertion: ${a.label} ("${a.term}")`);
+      }
+    }
+    logPass('[README.zh-CN.md] Verified Chinese boundary and privacy assertions');
+  }
+
+  // Assertions for TRADEMARKS.md
+  const trademarksPath = path.join(RELEASE_ROOT, 'TRADEMARKS.md');
+  if (fs.existsSync(trademarksPath)) {
+    checkedFiles++;
+    const content = fs.readFileSync(trademarksPath, 'utf-8');
+    if (!content.includes('Community Build') || !content.includes('非官方构建')) {
+      logFail('[TRADEMARKS.md] Missing required Community Build identifier requirements');
+    }
+    if (!content.includes('Digital Signatures') && !content.includes('Apple Developer ID')) {
+      logFail('[TRADEMARKS.md] Missing digital code signature reservation statement');
+    }
+    logPass('[TRADEMARKS.md] Verified trademark separation assertions');
+  }
+
+  // Assertions for release-process.md
+  const releaseProcPath = path.join(RELEASE_ROOT, 'docs/release-process.md');
+  if (fs.existsSync(releaseProcPath)) {
+    checkedFiles++;
+    const content = fs.readFileSync(releaseProcPath, 'utf-8');
+    if (!content.includes('pre-source-publication')) {
+      logFail('[docs/release-process.md] Missing pre-source-publication legacy label');
+    }
+    if (!content.includes('source-backed')) {
+      logFail('[docs/release-process.md] Missing source-backed release label');
+    }
+    logPass('[docs/release-process.md] Verified legacy and source-backed release labels');
+  }
+}
+
 // Execute selected scope
 console.log(`Starting documentation verification (scope: ${scope})...`);
 
@@ -286,6 +363,9 @@ if (scope === 'all' || scope === 'roadmap-changelog') {
 }
 if (scope === 'all' || scope === 'community') {
   verifyCommunityDocs();
+}
+if (scope === 'all' || scope === 'boundaries') {
+  verifyBoundaryAssertions();
 }
 if (scope === 'all') {
   verifyRelativeLinks();

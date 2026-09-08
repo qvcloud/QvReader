@@ -73,3 +73,10 @@ QvReader is designed around three primary view states. You always begin in **rea
 
 - **macOS**: If Gatekeeper shows an unidentified developer warning, right-click `QvReader.app` and choose "Open", or run `xattr -cr /Applications/QvReader.app` in Terminal.
 - **Windows**: If SmartScreen appears, click "More info" and select "Run anyway".
+
+---
+
+## Privacy & Support Scope
+
+- **Document Confidentiality**: Your documents stay on your machine. QvReader performs zero network requests during reading, searching, or editing.
+- **Support Limits**: Official support is provided only for official releases. For third-party builds or forks, please refer to the respective repository maintainer per [SUPPORT.md](../SUPPORT.md).
