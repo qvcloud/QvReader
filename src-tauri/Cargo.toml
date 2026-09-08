@@ -27,7 +27,7 @@ tauri-plugin-fs = "2.0.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 encoding_rs = "0.8"
-notify = "6.1"
+notify = "8.2"
 xxhash-rust = { version = "0.8", features = ["xxh64"] }
 dirs = "5.0"
 sha2 = "0.10"
