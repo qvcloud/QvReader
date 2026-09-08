@@ -35,7 +35,7 @@
     "highlight.js": "^11.11.1",
     "html-to-image": "^1.11.13",
     "katex": "^0.16.21",
-    "lucide-react": "^0.475.0",
+    "lucide-react": "^1.41.0",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-footnote": "^4.0.0",
