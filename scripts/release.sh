@@ -5,8 +5,9 @@
 # updates/validates changelog, and checks version consistency before tagging.
 #
 # Usage:
-#   ./scripts/release.sh <version>          # e.g., 0.2.0 or v0.2.0
-#   DRY_RUN=1 ./scripts/release.sh 0.2.0
+#   ./scripts/release.sh [patch|minor|major]   # auto-derive next version (default patch)
+#   ./scripts/release.sh <version>             # e.g., 0.2.0 or v0.2.0
+#   DRY_RUN=1 ./scripts/release.sh             # preflight only, no file changes
 # ==============================================================================
 set -euo pipefail
 
@@ -16,14 +17,38 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$REPO_ROOT"
 
 RAW_VER="${1:-}"
-if [ -z "$RAW_VER" ]; then
-  echo "Usage: $0 <version> (e.g. 0.2.0 or v0.2.0)" >&2
-  exit 1
+BUMP_KIND="${1:-}"
+
+# --- Resolve the target version -------------------------------------------
+# Version lives only in git tags. Auto-derive the next release from the most
+# recent semver tag (scripts/derive-version.mjs) unless an explicit version or
+# a bump kind (patch|minor|major) is given.
+derive_next_version() {
+  local kind="${1:-patch}"
+  local base
+  base="$(node "$SCRIPT_DIR/derive-version.mjs")"
+  # strip any dev/dirty suffix (e.g. 0.1.8-3-gabc123 -> 0.1.8)
+  base="${base%%-*}"
+  local major minor patch
+  IFS='.' read -r major minor patch <<EOF
+$base
+EOF
+  case "$kind" in
+    major) major=$((major + 1)); minor=0; patch=0 ;;
+    minor) minor=$((minor + 1)); patch=0 ;;
+    patch|*) patch=$((patch + 1)) ;;
+  esac
+  echo "${major}.${minor}.${patch}"
+}
+
+if [ -z "$RAW_VER" ] || [ "$RAW_VER" = "patch" ] || [ "$RAW_VER" = "minor" ] || [ "$RAW_VER" = "major" ]; then
+  RAW_VER="$(derive_next_version "${BUMP_KIND:-patch}")"
+  echo "→ No explicit version. Auto-derived next ${BUMP_KIND:-patch} release: $RAW_VER"
 fi
 
 VER="${RAW_VER#v}"
 if ! echo "$VER" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
-  echo "❌ Error: Invalid semver format '$RAW_VER'. Expected X.Y.Z (e.g. 0.2.0)" >&2
+  echo "❌ Error: Invalid semver format '$RAW_VER'. Expected X.Y.Z or patch|minor|major (e.g. 0.2.0)" >&2
   exit 1
 fi
 TAG="v$VER"
@@ -87,13 +112,12 @@ if [ "$DRY_RUN" != "1" ]; then
   perl -0pi -e 's/("version":\s*)"[^"]+"/${1}"'"$VER"'"/' src-tauri/tauri.conf.json
   perl -0pi -e 's/("title":\s*"QvReader\s+)[^"]*("\s*,)/${1}v'"$VER"'$2/' src-tauri/tauri.conf.json
 
-  # src/config/version.ts
-  if [ -f "src/config/version.ts" ]; then
-    perl -0pi -e 's/(CLIENT_VERSION\s*=\s*)[^;]+;/${1}'"'$VER'"';/' src/config/version.ts
-  fi
-  echo "✔ Updated package.json, Cargo.toml, Cargo.lock, tauri.conf.json, and src/config/version.ts."
+  # NOTE: src/config/version.ts is intentionally NOT bumped here. CLIENT_VERSION
+  # is injected at build/test time from git (vite.config.ts define +
+  # scripts/derive-version.mjs). The git tag is the single source of truth.
+  echo "✔ Updated package.json, Cargo.toml, Cargo.lock, and tauri.conf.json."
 else
-  echo "✔ [dry-run] Would bump version to $VER in package.json, Cargo.toml, Cargo.lock, tauri.conf.json, and version.ts."
+  echo "✔ [dry-run] Would bump version to $VER in package.json, Cargo.toml, Cargo.lock, and tauri.conf.json."
 fi
 
 # 5. Changelog validation & update

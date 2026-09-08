@@ -102,17 +102,19 @@ if (!fs.existsSync(tauriConfPath)) {
   }
 }
 
-// 5. src/config/version.ts
+// 5. src/config/version.ts (must derive from git-injected __CLIENT_VERSION__,
+//    never a hardcoded literal — the git tag is the single source of truth)
 const versionTsPath = path.join(REPO_ROOT, 'src/config/version.ts');
 if (fs.existsSync(versionTsPath)) {
   const versionTsContent = fs.readFileSync(versionTsPath, 'utf-8');
-  const match = versionTsContent.match(/CLIENT_VERSION\s*=\s*['"]([^'"]+)['"]/);
-  if (!match) {
-    logFail('Failed to extract CLIENT_VERSION from src/config/version.ts');
-  } else if (match[1] !== baseVersion) {
-    logFail(`src/config/version.ts CLIENT_VERSION (${match[1]}) does not match package.json (${baseVersion})`);
+  const hardcoded = versionTsContent.match(/CLIENT_VERSION\s*[:=]\s*['"][^'"]+['"]/);
+  const derivesFromInjection = versionTsContent.includes('__CLIENT_VERSION__');
+  if (hardcoded) {
+    logFail(`src/config/version.ts still hardcodes CLIENT_VERSION (${hardcoded[0]}). Version must be git-injected.`);
+  } else if (!derivesFromInjection) {
+    logFail('src/config/version.ts does not derive CLIENT_VERSION from the git-injected __CLIENT_VERSION__ global.');
   } else {
-    logPass(`src/config/version.ts CLIENT_VERSION matches: ${match[1]}`);
+    logPass('src/config/version.ts derives CLIENT_VERSION from git (no hardcoded literal).');
   }
 }
 
