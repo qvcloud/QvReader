@@ -153,16 +153,6 @@ pub fn save_license_credential(key: &str) -> Result<(), String> {
     Ok(())
 }
 
-pub fn load_license_credential() -> Option<String> {
-    #[cfg(not(test))]
-    {
-        if let Ok(entry) = keyring::Entry::new(KEYRING_SERVICE, KEYRING_USER) {
-            return entry.get_password().ok();
-        }
-    }
-    None
-}
-
 pub fn delete_license_credential() -> Result<(), String> {
     #[cfg(not(test))]
     {
@@ -215,12 +205,6 @@ pub fn load_license() -> Option<LicenseRecord> {
     }
     let data = fs::read(&path).ok()?;
     serde_json::from_slice::<LicenseRecord>(&data).ok()
-}
-
-pub fn save_license(record: &LicenseRecord) -> Result<(), String> {
-    let path = get_license_file_path();
-    let json = serde_json::to_string_pretty(record).map_err(|e| e.to_string())?;
-    fs::write(path, json).map_err(|e| e.to_string())
 }
 
 pub fn delete_license() -> Result<(), String> {

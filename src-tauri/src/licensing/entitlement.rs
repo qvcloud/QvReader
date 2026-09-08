@@ -33,6 +33,12 @@ pub struct SignedEntitlement {
     #[serde(rename = "keyId")]
     pub key_id: String,
     pub signature: String,
+    /// Display-only customer email surfaced at activation time. Deliberately NOT
+    /// part of [`SignedEntitlement::canonical_payload`], so it is unsigned display
+    /// metadata: it never influences entitlement verification. Optional to stay
+    /// backward compatible with previously persisted entitlements that lack it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub customer_email: Option<String>,
 }
 
 impl SignedEntitlement {

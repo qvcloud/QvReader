@@ -46,7 +46,7 @@ impl LicenseManager {
                     is_pro: true,
                     trial_used: trial.used_sessions,
                     trial_max: trial.max_sessions,
-                    customer_email: Some("pro@qvreader.com".to_string()),
+                    customer_email: entitlement.customer_email,
                     expires_at: entitlement.expires_at.map(|e| e.to_string()),
                     device_fingerprint: fingerprint,
                 };
@@ -118,8 +118,13 @@ impl LicenseManager {
             format!("Entitlement verification failed: {}", e)
         })?;
 
-        // Persist verified entitlement
-        storage::save_entitlement(&response.entitlement)?;
+        // Surface the real customer email (unsigned display metadata) on the token
+        // so offline re-verification via get_current_info reports the actual account.
+        let mut entitlement = response.entitlement;
+        if entitlement.customer_email.is_none() {
+            entitlement.customer_email = response.customer_email;
+        }
+        storage::save_entitlement(&entitlement)?;
 
         // Persist credential in platform keyring where supported
         let _ = storage::save_license_credential(license_key);
@@ -206,7 +211,7 @@ mod tests {
 
         let info = LicenseManager::get_current_info();
         assert!(info.is_pro);
-        assert_eq!(info.customer_email, Some("pro@qvreader.com".to_string()));
+        assert_eq!(info.customer_email, Some("developer@qvreader.com".to_string()));
 
         // Deactivate
         let deactivate_result = LicenseManager::deactivate().await;

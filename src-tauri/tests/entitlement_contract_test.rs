@@ -31,6 +31,7 @@ fn create_valid_test_entitlement(pkcs8: &[u8]) -> SignedEntitlement {
         issuer: EXPECTED_ISSUER.to_string(),
         key_id: TEST_PUBLIC_KEY_V1_ID.to_string(),
         signature: String::new(),
+        customer_email: None,
     };
     sign_entitlement_for_test(&mut entitlement, pkcs8);
     entitlement
@@ -86,6 +87,7 @@ fn test_expired_entitlement_fails() {
         issuer: EXPECTED_ISSUER.to_string(),
         key_id: TEST_PUBLIC_KEY_V1_ID.to_string(),
         signature: String::new(),
+        customer_email: None,
     };
     sign_entitlement_for_test(&mut entitlement, &pkcs8);
     let res = entitlement.verify();

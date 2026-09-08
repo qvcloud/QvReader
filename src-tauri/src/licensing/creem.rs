@@ -30,24 +30,16 @@ pub struct ActivationSuccessResponse {
 
 #[derive(Debug, Deserialize)]
 pub struct ActivationErrorResponse {
-    pub success: bool,
     #[serde(rename = "errorCode")]
     pub error_code: Option<String>,
     #[serde(rename = "errorMessage")]
     pub error_message: Option<String>,
-    pub retryable: Option<bool>,
 }
 
 #[derive(Debug, Serialize)]
 pub struct DeactivationPayload<'a> {
     pub contract_version: u32,
     pub device_id_hash: &'a str,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct DeactivationResponse {
-    pub success: bool,
-    pub error: Option<String>,
 }
 
 pub struct ActivationClient {
@@ -67,6 +59,9 @@ impl ActivationClient {
         }
     }
 
+    // Used by the integration contract test (tests/entitlement_contract_test.rs) to
+    // point the client at an unreachable/local endpoint; not referenced by the bin.
+    #[cfg_attr(not(test), allow(dead_code))]
     pub fn with_api_base(api_base: &str) -> Self {
         let client = reqwest::Client::builder()
             .timeout(Duration::from_secs(8))
@@ -109,6 +104,7 @@ impl ActivationClient {
                 issuer: entitlement::EXPECTED_ISSUER.to_string(),
                 key_id: entitlement::TEST_PUBLIC_KEY_V1_ID.to_string(),
                 signature: String::new(),
+                customer_email: Some("developer@qvreader.com".to_string()),
             };
             entitlement::sign_entitlement_for_test(&mut ent, &pkcs8);
 
@@ -151,9 +147,15 @@ impl ActivationClient {
         }
 
         if let Ok(err_body) = serde_json::from_slice::<ActivationErrorResponse>(&body_bytes) {
-            let msg = err_body
+            let mut msg = err_body
                 .error_message
                 .unwrap_or_else(|| "License activation failed".to_string());
+            // Surface the stable, machine-readable code (if any) for support diagnostics
+            if let Some(code) = err_body.error_code {
+                if !code.is_empty() && !msg.contains(&code) {
+                    msg = format!("{} (errorCode: {})", msg, code);
+                }
+            }
             return Err(sanitize_error(&msg));
         }
 
