@@ -89,7 +89,7 @@ jobs:
           cargo test --manifest-path src-tauri/Cargo.toml --locked
 
       - name: Build Desktop Application Package
-        run: npm run tauri -- build --no-bundle false
+        run: npm run tauri -- build
 
       - name: Stage Artifacts
         shell: bash
