@@ -1,6 +1,6 @@
 [package]
 name = "qvreader"
-version = "0.1.6"
+version = "0.1.7"
 description = "Ultra-lightweight Instant Markdown Reader & Editor"
 authors = ["QvReader Team"]
 edition = "2021"

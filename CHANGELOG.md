@@ -6,6 +6,13 @@ All notable changes are tracked here. Format follows [Keep a Changelog](https://
 > Releases prior to `v0.2.0` (`v0.1.0` ~ `v0.1.5`) are historical releases built before open-sourcing (`pre-source-publication`). Their tags remain immutable.
 > Starting with version `v0.2.0`, all releases are 100% source-backed and verifiable from public commits on `qvcloud/QvReader`.
 
+## [0.1.7] - 2026-09-08
+
+### Fixed
+- Eliminate stale hardcoded version references that broke the v0.1.6 release pipeline: window-title unit tests now derive expectations from `CLIENT_VERSION`, the Rust `Cargo.lock` package version is kept in sync, license activation reports `client_version` from `CARGO_PKG_VERSION`, and the About dialog fallback version derives from `CLIENT_VERSION`.
+
+---
+
 ## [0.1.6] - 2026-09-08
 
 ### Changed
