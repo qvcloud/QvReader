@@ -51,7 +51,7 @@
     "@types/markdown-it": "^14.1.2",
     "@types/markdown-it-anchor": "^4.0.0",
     "@types/markdown-it-footnote": "^3.0.4",
-    "@types/node": "^22.13.4",
+    "@types/node": "^26.4.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
