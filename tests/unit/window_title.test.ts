@@ -1,10 +1,18 @@
 import { describe, it, expect } from 'vitest';
-import { formatWindowTitle, APP_DISPLAY_NAME, CLIENT_VERSION } from '../../src/config/version';
+import { formatWindowTitle, APP_DISPLAY_NAME, APP_BASE_NAME, CLIENT_VERSION } from '../../src/config/version';
+
+// Derive expected display values from the single source of truth
+// (src/config/version.ts) instead of hardcoding a literal version, so a
+// version bump never silently breaks these assertions again.
+const SEMVER_RE = /^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/;
 
 describe('formatWindowTitle', () => {
-  it('has valid CLIENT_VERSION and APP_DISPLAY_NAME', () => {
-    expect(CLIENT_VERSION).toBe('0.1.5');
-    expect(APP_DISPLAY_NAME).toBe('QvReader v0.1.5');
+  it('has a valid CLIENT_VERSION and consistent APP_DISPLAY_NAME', () => {
+    expect(CLIENT_VERSION).toMatch(SEMVER_RE);
+    expect(APP_BASE_NAME).toBe('QvReader');
+    // Display name must carry the client version, regardless of edition suffix.
+    expect(APP_DISPLAY_NAME).toContain(`v${CLIENT_VERSION}`);
+    expect(APP_DISPLAY_NAME.startsWith(APP_BASE_NAME)).toBe(true);
   });
 
   it('formats untitled document title correctly', () => {
@@ -12,7 +20,7 @@ describe('formatWindowTitle', () => {
       fileName: 'Untitled.md',
       isDirty: false
     });
-    expect(title).toBe('Untitled.md - QvReader v0.1.5');
+    expect(title).toBe(`Untitled.md - ${APP_DISPLAY_NAME}`);
   });
 
   it('formats null fileName as Untitled.md', () => {
@@ -20,7 +28,7 @@ describe('formatWindowTitle', () => {
       fileName: null,
       isDirty: false
     });
-    expect(title).toBe('Untitled.md - QvReader v0.1.5');
+    expect(title).toBe(`Untitled.md - ${APP_DISPLAY_NAME}`);
   });
 
   it('formats named clean document correctly', () => {
@@ -28,7 +36,7 @@ describe('formatWindowTitle', () => {
       fileName: 'README.md',
       isDirty: false
     });
-    expect(title).toBe('README.md - QvReader v0.1.5');
+    expect(title).toBe(`README.md - ${APP_DISPLAY_NAME}`);
   });
 
   it('formats dirty document with bullet prefix', () => {
@@ -36,7 +44,7 @@ describe('formatWindowTitle', () => {
       fileName: 'README.md',
       isDirty: true
     });
-    expect(title).toBe('• README.md - QvReader v0.1.5');
+    expect(title).toBe(`• README.md - ${APP_DISPLAY_NAME}`);
   });
 
   it('formats workspace active document with project name', () => {
@@ -46,7 +54,7 @@ describe('formatWindowTitle', () => {
       hasFilePath: true,
       isDirty: false
     });
-    expect(title).toBe('guide.md — markdown-viewer - QvReader v0.1.5');
+    expect(title).toBe(`guide.md — markdown-viewer - ${APP_DISPLAY_NAME}`);
   });
 
   it('formats workspace dirty document with bullet prefix and project name', () => {
@@ -56,7 +64,7 @@ describe('formatWindowTitle', () => {
       hasFilePath: true,
       isDirty: true
     });
-    expect(title).toBe('• guide.md — markdown-viewer - QvReader v0.1.5');
+    expect(title).toBe(`• guide.md — markdown-viewer - ${APP_DISPLAY_NAME}`);
   });
 
   it('formats workspace with no active document to project name only', () => {
@@ -66,6 +74,6 @@ describe('formatWindowTitle', () => {
       hasFilePath: false,
       isDirty: false
     });
-    expect(title).toBe('markdown-viewer - QvReader v0.1.5');
+    expect(title).toBe(`markdown-viewer - ${APP_DISPLAY_NAME}`);
   });
 });

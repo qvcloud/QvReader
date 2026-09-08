@@ -120,7 +120,7 @@ impl ActivationClient {
             license_key: clean_key,
             device_id_hash,
             device_label,
-            client_version: Some("0.1.5"),
+            client_version: Some(env!("CARGO_PKG_VERSION")),
             platform: Some(std::env::consts::OS),
         };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { EDITION_CONFIG } from '../config/edition';
+import { CLIENT_VERSION } from '../config/version';
 import { AppVersionInfo } from '../types/updater';
 import { X } from 'lucide-react';
 import { useI18n } from '../i18n';
@@ -43,7 +44,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({ isOpen, onClose, versi
           )}
         </h3>
         <p className="text-xs font-mono text-zinc-500 mt-1">
-          {versionInfo ? `v${versionInfo.version}` : 'v0.1.5'} · {buildTypeLabel}
+          {versionInfo ? `v${versionInfo.version}` : `v${CLIENT_VERSION}`} · {buildTypeLabel}
         </p>
         <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 text-xs text-zinc-500 space-y-1">
           <p>Apache-2.0 Open Source License</p>
