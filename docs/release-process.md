@@ -46,9 +46,7 @@ Useful switches:
 |---|---|
 | `DRY_RUN=1` | Preflight only — no files changed, nothing pushed |
 | `PUBLISH=0` | Bump and commit locally, but do not push or tag |
-| `SKIP_CI_WAIT=1` | Tag without waiting for Public CI to turn green |
 | `YES=1` | Skip the interactive push/tag confirmations |
-| `CI_WAIT_TIMEOUT` | Seconds to wait for a CI run (default `1800`) |
 
 ### Step 2: Automated Preflight Checks
 
@@ -68,14 +66,15 @@ The script runs `scripts/verify-version.mjs --tag vX.Y.Z`, verifying that:
 
 1. Commits the manifest + changelog bump (skipped if there is nothing to commit).
 2. Pushes `main` to `origin`.
-3. Waits for the **Public CI** run on that commit (`ci.yml`). If it turns red the script refuses to
-   tag. If `gh` is unavailable or no run appears, it asks for confirmation before continuing.
-4. Creates the annotated tag `vX.Y.Z` on the pushed commit and pushes it.
+3. Creates the annotated tag `vX.Y.Z` on the pushed commit and pushes it. The tag push is what
+   triggers `release.yml`, so confirm **Public CI** is green for that commit before running the
+   script — the script does not gate on it.
 
 Pushing `main` requires a credential with the **`workflow` scope** whenever the push contains
-`.github/workflows` changes. If GitHub rejects the push for that reason the script prints an
-explicit hint; the release commit stays local and safe, so re-running after fixing the credential
-is enough.
+`.github/workflows` changes. This applies even to the repository owner: GitHub enforces the scope on
+OAuth tokens independently of account permission. Pushing over **SSH** is not subject to it. If
+GitHub rejects the push for that reason the script prints the available workarounds; the release
+commit stays local and safe, so re-running after fixing the credential is enough.
 
 If a run has to be completed by hand (for example, CI was green but the script was interrupted):
 

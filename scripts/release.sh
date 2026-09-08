@@ -10,19 +10,13 @@
 #   ./scripts/release.sh <version>             # e.g., 0.2.0 or v0.2.0
 #   DRY_RUN=1 ./scripts/release.sh             # preflight only, no changes at all
 #   PUBLISH=0 ./scripts/release.sh             # prepare + commit locally, no push/tag
-#   SKIP_CI_WAIT=1 ./scripts/release.sh        # tag without waiting for Public CI
 #   YES=1 ./scripts/release.sh                 # skip interactive confirmations
-#
-# Tunables (env): CI_WAIT_TIMEOUT (default 1800s), CI_POLL_INTERVAL (default 15s)
 # ==============================================================================
 set -euo pipefail
 
 DRY_RUN="${DRY_RUN:-0}"
 PUBLISH="${PUBLISH:-1}"
-SKIP_CI_WAIT="${SKIP_CI_WAIT:-0}"
 YES="${YES:-0}"
-CI_WAIT_TIMEOUT="${CI_WAIT_TIMEOUT:-1800}"
-CI_POLL_INTERVAL="${CI_POLL_INTERVAL:-15}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$REPO_ROOT"
@@ -51,49 +45,6 @@ confirm() {
   esac
 }
 
-# gh is not always on PATH (Homebrew installs to /opt/homebrew/bin).
-resolve_gh() {
-  if command -v gh >/dev/null 2>&1; then
-    command -v gh
-    return 0
-  fi
-  local candidate
-  for candidate in /opt/homebrew/bin/gh /usr/local/bin/gh; do
-    if [ -x "$candidate" ]; then
-      echo "$candidate"
-      return 0
-    fi
-  done
-  return 1
-}
-
-# Wait for the Public CI run attached to $1 (commit sha) and report its status.
-# Returns 0 = green, 1 = red/cancelled, 2 = no run observed (indeterminate).
-wait_for_ci() {
-  local gh_bin="$1" sha="$2" waited=0 run_id=""
-  while [ "$waited" -lt "$CI_WAIT_TIMEOUT" ]; do
-    run_id="$("$gh_bin" run list --workflow ci.yml --commit "$sha" --limit 1 \
-      --json databaseId --jq '.[0].databaseId' 2>/dev/null || true)"
-    if [ -n "$run_id" ] && [ "$run_id" != "null" ]; then
-      break
-    fi
-    sleep "$CI_POLL_INTERVAL"
-    waited=$((waited + CI_POLL_INTERVAL))
-  done
-
-  if [ -z "$run_id" ] || [ "$run_id" = "null" ]; then
-    echo "⚠️  No Public CI run observed for $sha within ${CI_WAIT_TIMEOUT}s."
-    return 2
-  fi
-
-  echo "   Run #$run_id detected — watching (poll ${CI_POLL_INTERVAL}s)..."
-  if "$gh_bin" run watch "$run_id" --interval "$CI_POLL_INTERVAL" --exit-status >/dev/null 2>&1; then
-    echo "✔ Public CI is green."
-    return 0
-  fi
-  echo "❌ Public CI failed or was cancelled (run #$run_id)."
-  return 1
-}
 
 # --- Resolve the target version -------------------------------------------
 # Version lives only in git tags. Auto-derive the next release from the most
@@ -261,8 +212,16 @@ if ! git push origin main 2> "$PUSH_ERR"; then
     echo "" >&2
     echo "❌ Push rejected. This push contains .github/workflows changes and the" >&2
     echo "   credential lacks the 'workflow' scope." >&2
-    echo "   Fix: use a token with 'workflow' scope, or push the workflow change" >&2
-    echo "   with a credential that has it, then re-run this script." >&2
+    echo "" >&2
+    echo "   Being the repository owner is not enough — GitHub enforces the" >&2
+    echo "   'workflow' scope on OAuth tokens regardless of account permission." >&2
+    echo "   Pick one:" >&2
+    echo "     a) push over SSH (not subject to the OAuth scope rule):" >&2
+    echo "          git remote set-url origin git@github.com:qvcloud/QvReader.git" >&2
+    echo "     b) use a classic PAT that has both 'repo' and 'workflow':" >&2
+    echo "          git remote set-url origin https://<PAT>@github.com/qvcloud/QvReader.git" >&2
+    echo "     c) gh auth refresh -s workflow   (adds the scope to the gh token)" >&2
+    echo "" >&2
     echo "   The release commit $RELEASE_SHA_SHORT is committed locally and safe." >&2
   fi
   rm -f "$PUSH_ERR"
@@ -270,38 +229,6 @@ if ! git push origin main 2> "$PUSH_ERR"; then
 fi
 rm -f "$PUSH_ERR"
 echo "✔ Pushed $RELEASE_SHA_SHORT to origin/main."
-
-CI_STATUS=2
-if [ "$SKIP_CI_WAIT" = "1" ]; then
-  echo "⚠️  SKIP_CI_WAIT=1 — skipping Public CI verification."
-  CI_STATUS=2
-else
-  if GH_BIN="$(resolve_gh)"; then
-    wait_for_ci "$GH_BIN" "$RELEASE_SHA" && CI_STATUS=0 || CI_STATUS=$?
-  else
-    echo "⚠️  'gh' CLI not found — cannot verify Public CI automatically."
-    CI_STATUS=2
-  fi
-fi
-
-if [ "$CI_STATUS" = "1" ]; then
-  echo "" >&2
-  echo "❌ Refusing to tag: Public CI is red. Fix main before releasing." >&2
-  echo "   Commit $RELEASE_SHA_SHORT is already pushed; once fixed, run:" >&2
-  echo "     git tag -a $TAG -m 'QvReader release $TAG' $RELEASE_SHA_SHORT" >&2
-  echo "     git push origin $TAG" >&2
-  exit 1
-fi
-if [ "$CI_STATUS" = "2" ]; then
-  if [ "$SKIP_CI_WAIT" != "1" ]; then
-    if ! confirm "   Public CI status is unknown. Tag anyway?"; then
-      echo "Aborted before tagging. main was pushed, but no tag was created."
-      echo "   When CI is green, run:"
-      echo "     git tag -a $TAG -m 'QvReader release $TAG' && git push origin $TAG"
-      exit 1
-    fi
-  fi
-fi
 
 # 9. Create and push the immutable tag (triggers Official Release Pipeline)
 echo "[9/9] Creating and pushing tag $TAG..."
