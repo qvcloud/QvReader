@@ -22,21 +22,34 @@ Following the open-source client migration, **`qvcloud/QvReader` is the sole aut
 
 ### Step 1: Preflight Preparation
 
-Run the preflight release script to bump versions, check clean working tree, verify branch ancestry on `main`, and ensure tag immutability:
+Run the preflight release script to bump versions, check clean working tree, verify branch ancestry on `main`, and ensure tag immutability. The version is derived from git, so **no argument is required**:
 
 ```bash
-# Verify preflight in dry-run mode
-DRY_RUN=1 ./scripts/release.sh 0.2.0
+# Verify preflight in dry-run mode (derives the next patch version, changes nothing)
+DRY_RUN=1 ./scripts/release.sh
 
-# Prepare release commit and bump manifests
+# Prepare release commit and bump manifests (auto-derived next patch)
+./scripts/release.sh
+
+# Optional: explicit increment kind or exact version
+./scripts/release.sh minor
 ./scripts/release.sh 0.2.0
 ```
 
+With no argument the script takes the most recent reachable semver tag and increments the patch
+component (for example, latest tag `v0.1.8` derives `0.1.9`).
+
 ### Step 2: Automated Preflight Checks
 
-The script runs `scripts/verify-version.mjs --tag v0.2.0`, verifying that:
-- `package.json`, `src-tauri/Cargo.toml`, `src-tauri/tauri.conf.json`, and `src/config/version.ts` have matching versions.
+The script runs `scripts/verify-version.mjs --tag vX.Y.Z`, verifying that:
+
+- `package.json`, `src-tauri/Cargo.toml`, `src-tauri/Cargo.lock` and `src-tauri/tauri.conf.json` all match the tag version (`Cargo.lock` must be included or `cargo test --locked` fails);
+- `src/config/version.ts` derives `CLIENT_VERSION` from the build-time `__CLIENT_VERSION__` injection and **contains no version literal** — the git tag is the single source of truth;
 - `CHANGELOG.md` has an entry for the version.
+
+> Never write a version number into `src/config/version.ts`. Duplicate version literals across files
+> caused three consecutive failed releases (`v0.1.6`, `v0.1.7`, `v0.1.8`). See the version authority
+> rules below.
 
 ### Step 3: Tag and Push
 
