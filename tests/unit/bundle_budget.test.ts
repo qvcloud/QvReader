@@ -6,6 +6,8 @@ import { loadKatex } from '../../src/lib/mathRenderer';
 describe('Client Distribution Bundle Size Budget', () => {
   beforeAll(async () => {
     await loadKatex();
+    const { renderMarkdown } = await import('../../src/lib/markdown');
+    renderMarkdown('# Warmup');
   });
   const distDir = path.resolve(__dirname, '../../dist');
   const assetsDir = path.resolve(distDir, 'assets');
