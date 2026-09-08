@@ -20,15 +20,16 @@ Following the open-source client migration, **`qvcloud/QvReader` is the sole aut
 
 ## 2. Release Steps
 
-### Step 1: Preflight Preparation
+### Step 1: Run the Release
 
-Run the preflight release script to bump versions, check clean working tree, verify branch ancestry on `main`, and ensure tag immutability. The version is derived from git, so **no argument is required**:
+The script derives the version from git, so **no argument is required**. It performs the whole
+release: preflight → bump → commit → push → wait for Public CI → tag:
 
 ```bash
-# Verify preflight in dry-run mode (derives the next patch version, changes nothing)
+# Preflight only: derive the next patch version and change nothing
 DRY_RUN=1 ./scripts/release.sh
 
-# Prepare release commit and bump manifests (auto-derived next patch)
+# Full release: auto-derived next patch
 ./scripts/release.sh
 
 # Optional: explicit increment kind or exact version
@@ -38,6 +39,16 @@ DRY_RUN=1 ./scripts/release.sh
 
 With no argument the script takes the most recent reachable semver tag and increments the patch
 component (for example, latest tag `v0.1.8` derives `0.1.9`).
+
+Useful switches:
+
+| Variable | Effect |
+|---|---|
+| `DRY_RUN=1` | Preflight only — no files changed, nothing pushed |
+| `PUBLISH=0` | Bump and commit locally, but do not push or tag |
+| `SKIP_CI_WAIT=1` | Tag without waiting for Public CI to turn green |
+| `YES=1` | Skip the interactive push/tag confirmations |
+| `CI_WAIT_TIMEOUT` | Seconds to wait for a CI run (default `1800`) |
 
 ### Step 2: Automated Preflight Checks
 
@@ -51,14 +62,30 @@ The script runs `scripts/verify-version.mjs --tag vX.Y.Z`, verifying that:
 > caused three consecutive failed releases (`v0.1.6`, `v0.1.7`, `v0.1.8`). See the version authority
 > rules below.
 
-### Step 3: Tag and Push
+### Step 3: Commit, Push, CI Gate, and Tag
+
+`./scripts/release.sh` performs these steps automatically and stops at the first failure:
+
+1. Commits the manifest + changelog bump (skipped if there is nothing to commit).
+2. Pushes `main` to `origin`.
+3. Waits for the **Public CI** run on that commit (`ci.yml`). If it turns red the script refuses to
+   tag. If `gh` is unavailable or no run appears, it asks for confirmation before continuing.
+4. Creates the annotated tag `vX.Y.Z` on the pushed commit and pushes it.
+
+Pushing `main` requires a credential with the **`workflow` scope** whenever the push contains
+`.github/workflows` changes. If GitHub rejects the push for that reason the script prints an
+explicit hint; the release commit stays local and safe, so re-running after fixing the credential
+is enough.
+
+If a run has to be completed by hand (for example, CI was green but the script was interrupted):
 
 ```bash
-git commit -am "chore(release): prepare v0.2.0"
 git tag -a v0.2.0 -m "QvReader release v0.2.0"
-git push origin main
 git push origin v0.2.0
 ```
+
+Tags are immutable. If a release fails after tagging, cut a **new** version rather than moving or
+deleting the existing tag — `v0.1.6`, `v0.1.7` and `v0.1.8` were all burned this way.
 
 ### Step 4: GitHub Actions Release Workflow
 
