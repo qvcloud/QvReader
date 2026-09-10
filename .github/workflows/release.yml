@@ -3,7 +3,7 @@ name: Official Release Pipeline
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+      - 'v*'
   workflow_dispatch:
     inputs:
       tag:
@@ -152,6 +152,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
@@ -178,7 +182,7 @@ jobs:
 
       - name: Test Release Provenance Manifest
         run: |
-          node tests/contracts/release-provenance.test.mjs
+          npx vitest run tests/contracts/release-provenance.test.mjs
 
       - name: Upload Final Release Assets
         uses: actions/upload-artifact@v4
