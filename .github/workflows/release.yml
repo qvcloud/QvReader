@@ -63,7 +63,7 @@ jobs:
     needs: preflight
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
           - platform: macos
@@ -104,22 +104,31 @@ jobs:
           cargo test --manifest-path src-tauri/Cargo.toml --locked
 
       - name: Build Desktop Application Package
-        run: npm run tauri -- build
+        run: |
+          if [ "${{ matrix.platform }}" = "macos" ]; then
+            npm run tauri -- build --bundles app
+          else
+            npm run tauri -- build
+          fi
 
       - name: Stage Artifacts
         shell: bash
         run: |
           mkdir -p dist-artifacts
           if [ "${{ matrix.platform }}" = "macos" ]; then
-            DMG=$(find src-tauri/target -name "*.dmg" ! -name "rw.*" 2>/dev/null | head -n 1 || true)
-            if [ -n "$DMG" ]; then
-              cp "$DMG" dist-artifacts/
-            else
-              APP=$(find src-tauri/target -name "*.app" -type d 2>/dev/null | head -n 1 || true)
-              if [ -n "$APP" ]; then
-                echo "Packaging DMG from app bundle..."
-                hdiutil create -volname "QvReader" -srcfolder "$APP" -ov -format UDZO dist-artifacts/QvReader-macOS.dmg
-              fi
+            APP=$(find src-tauri/target -path "*/bundle/*" -name "*.app" -type d 2>/dev/null | head -n 1 || true)
+            if [ -n "$APP" ]; then
+              echo "Packaging DMG from app bundle ($APP)..."
+              STAGE_DIR="src-tauri/target/stage_dmg"
+              rm -rf "$STAGE_DIR"
+              mkdir -p "$STAGE_DIR"
+              cp -r "$APP" "$STAGE_DIR/"
+              ln -s /Applications "$STAGE_DIR/Applications"
+              TAG="${{ github.ref_name }}"
+              ARCH=$(uname -m)
+              DMG_NAME="QvReader_${TAG#v}_${ARCH}.dmg"
+              hdiutil create -volname "QvReader" -srcfolder "$STAGE_DIR" -ov -format UDZO "dist-artifacts/$DMG_NAME"
+              rm -rf "$STAGE_DIR"
             fi
           elif [ "${{ matrix.platform }}" = "windows" ]; then
             find src-tauri/target -path "*/bundle/*" -name "*.exe" -exec cp {} dist-artifacts/ \; 2>/dev/null || true

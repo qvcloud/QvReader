@@ -102,11 +102,11 @@ else
 fi
 
 # 4. Execute Tauri Build
-echo "==> Executing npm run tauri build ${BUILD_FLAGS[*]}..."
+echo "==> Executing npm run tauri build ${BUILD_FLAGS[*]} --bundles app..."
 if [[ ${#BUILD_FLAGS[@]} -gt 0 ]]; then
-  npm run tauri build -- "${BUILD_FLAGS[@]}"
+  npm run tauri build -- "${BUILD_FLAGS[@]}" --bundles app
 else
-  npm run tauri build
+  npm run tauri build -- --bundles app
 fi
 
 # 5. Stage artifacts into dist-artifacts/
@@ -114,8 +114,7 @@ echo "==> [3/3] Packaging and staging macOS artifacts..."
 ARTIFACTS_DIR="$ROOT_DIR/dist-artifacts"
 mkdir -p "$ARTIFACTS_DIR"
 
-DMG_PATH=$(find "$ROOT_DIR/src-tauri/target" -name "*.dmg" ! -name "rw.*" 2>/dev/null | head -n 1 || true)
-APP_PATH=$(find "$ROOT_DIR/src-tauri/target" -name "*.app" -type d 2>/dev/null | head -n 1 || true)
+APP_PATH=$(find "$ROOT_DIR/src-tauri/target" -path "*/bundle/*" -name "*.app" -type d 2>/dev/null | head -n 1 || true)
 
 if [[ -z "$DMG_PATH" && -n "$APP_PATH" ]]; then
   echo "==> Packaging optimized compressed DMG (UDZO) using hdiutil..."
