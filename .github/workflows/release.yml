@@ -122,11 +122,11 @@ jobs:
               fi
             fi
           elif [ "${{ matrix.platform }}" = "windows" ]; then
-            find src-tauri/target -name "*.exe" ! -name "QvReader.exe" ! -name "*build*" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
-            find src-tauri/target -name "*.msi" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+            find src-tauri/target -path "*/bundle/*" -name "*.exe" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+            find src-tauri/target -path "*/bundle/*" -name "*.msi" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
           elif [ "${{ matrix.platform }}" = "linux" ]; then
-            find src-tauri/target -name "*.AppImage" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
-            find src-tauri/target -name "*.deb" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+            find src-tauri/target -path "*/bundle/*" -name "*.AppImage" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
+            find src-tauri/target -path "*/bundle/*" -name "*.deb" -exec cp {} dist-artifacts/ \; 2>/dev/null || true
           fi
           ls -la dist-artifacts/
 

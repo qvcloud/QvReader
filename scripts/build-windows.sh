@@ -95,7 +95,7 @@ mkdir -p "$ARTIFACTS_DIR"
 
 FOUND_COUNT=0
 for ext in exe msi; do
-  matches=$(find "$ROOT_DIR/src-tauri/target" -name "*.$ext" 2>/dev/null || true)
+  matches=$(find "$ROOT_DIR/src-tauri/target" -path "*/bundle/*" -name "*.$ext" 2>/dev/null || true)
   if [[ -n "$matches" ]]; then
     while IFS= read -r file; do
       if [[ -f "$file" ]]; then
