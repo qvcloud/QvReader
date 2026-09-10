@@ -17,7 +17,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { validateReleaseProvenance } from '../tests/contracts/release-provenance.test.mjs';
+import { validateReleaseProvenance } from './validate-release-provenance.mjs';
 
 const args = process.argv.slice(2);
 let artifactsDir = process.cwd();
