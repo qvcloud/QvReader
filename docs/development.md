@@ -128,11 +128,21 @@ To ensure external contributors can freely modify and test advanced features (di
 > [!NOTE]
 > In local development (`npm run dev`) and test environments (`NODE_ENV !== 'production'`), **all Pro editing and diagram capabilities are unlocked by default** without decrementing trial sessions.
 
-When producing standalone non-official builds:
+When producing standalone desktop installers:
 ```bash
-# Build Community Edition Desktop Binary:
-make build-community
+# Preflight environment check:
+./scripts/verify-prerequisites.sh
+
+# Cross-platform build (auto-detects current OS):
+make build
+# or: ./scripts/build-client.sh
+
+# Dedicated platform builds:
+make build-macos     # Creates DMG and .app in dist-artifacts/
+make build-linux     # Creates .deb and .AppImage in dist-artifacts/
+make build-windows   # Creates .exe and .msi in dist-artifacts/
 ```
+All installer artifacts are staged cleanly to `dist-artifacts/`.
 Community builds compiled from source will show **"Community Build"** in the window title and About dialog per [TRADEMARKS.md](../TRADEMARKS.md). Official maintainer releases are built through secure CI release workflows. Technical support for third-party forks is provided by their authors per [SUPPORT.md](../SUPPORT.md).
 
 ---
