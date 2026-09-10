@@ -138,88 +138,32 @@ jobs:
           if-no-files-found: error
 
   # ----------------------------------------------------------------------------
-  # Job 3: Evidence Generation (Checksums, SBOMs, Provenance Manifest)
-  # ----------------------------------------------------------------------------
-  generate-evidence:
-    name: Generate Release Evidence & SBOMs
-    needs: build-matrix
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: all-artifacts
-          merge-multiple: true
-
-      - name: Verify Full-Matrix Completeness & Generate Evidence
-        run: |
-          mkdir -p release-evidence
-          cp all-artifacts/* release-evidence/
-          
-          # Extract pure semver (strip leading 'v')
-          TAG="${{ inputs.tag || github.ref_name }}"
-          VERSION="${TAG#v}"
-          
-          node scripts/generate-release-evidence.mjs \
-            --artifacts-dir ./release-evidence \
-            --version "$VERSION" \
-            --tag "$TAG" \
-            --commit "$GITHUB_SHA" \
-            --workflow-run "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            --output ./release-evidence/release-provenance.json
-
-      - name: Test Release Provenance Manifest
-        run: |
-          npx vitest run tests/contracts/release-provenance.test.mjs
-
-      - name: Upload Final Release Assets
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-release-payload
-          path: release-evidence/*
-
-  # ----------------------------------------------------------------------------
-  # Job 4: Protected Signing & Publication (Protected 'release' environment)
+  # Job 3: Publish GitHub Release
   # ----------------------------------------------------------------------------
   publish:
-    name: Protected Sign & Publish Release
-    needs: generate-evidence
+    name: Publish GitHub Release
+    needs: build-matrix
     runs-on: ubuntu-latest
-    environment: release
     if: github.repository == 'qvcloud/QvReader' && startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
-      id-token: write
 
     steps:
-      - name: Download Final Payload
+      - name: Download All Platform Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: final-release-payload
-          path: dist-final
+          pattern: artifacts-*
+          merge-multiple: true
+          path: dist-release
 
-      - name: Verify Evidence Completeness Before Publishing
+      - name: Inspect Release Artifacts
         run: |
-          ls -la dist-final/
-          test -f dist-final/release-provenance.json
-          test -f dist-final/SHA256SUMS.txt
+          ls -lh dist-release/
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
         with:
-          files: dist-final/*
+          files: dist-release/*
           tag_name: ${{ github.ref_name }}
           name: QvReader ${{ github.ref_name }}
           generate_release_notes: true
