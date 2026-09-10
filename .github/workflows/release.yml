@@ -67,7 +67,7 @@ jobs:
       matrix:
         include:
           - platform: macos
-            os: macos-13
+            os: macos-14
           - platform: windows
             os: windows-latest
           - platform: linux
