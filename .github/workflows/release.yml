@@ -27,12 +27,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Tag
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: 'npm'
@@ -82,10 +82,10 @@ jobs:
 
     steps:
       - name: Checkout Source at Exact Tag Commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: 'npm'
@@ -148,7 +148,7 @@ jobs:
           ls -la dist-artifacts/
 
       - name: Upload Platform Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: artifacts-${{ matrix.platform }}
           path: dist-artifacts/*
@@ -167,7 +167,7 @@ jobs:
 
     steps:
       - name: Download All Platform Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: artifacts-*
           merge-multiple: true
@@ -178,7 +178,7 @@ jobs:
           ls -lh dist-release/
 
       - name: Publish GitHub Release
-        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           files: dist-release/*
           tag_name: ${{ inputs.tag || github.ref_name }}
